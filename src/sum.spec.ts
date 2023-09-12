@@ -1,6 +1,7 @@
+import { Expression } from './types';
 import { interpreter } from '.';
 
-const programSum = {
+const programSum: Expression = {
   expression: {
     kind: 'Let',
     name: {

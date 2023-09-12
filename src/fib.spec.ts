@@ -1,6 +1,7 @@
+import { Expression } from './types';
 import { interpreter } from '.';
 
-const fib = {
+const fib: Expression = {
   expression: {
     kind: 'Let',
     name: {
