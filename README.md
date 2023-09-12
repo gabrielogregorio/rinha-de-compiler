@@ -1,23 +1,21 @@
 # Rinha de compiladores - Interpretador
 
-## Execução do interpretador via docker
+## Execução para o rinha
 
-> É preciso do docker compose v2 ou você pode editar o makefile para sua versão favorita
+Clone o repositório
 
-1 - [Tutorial](https://www.nerdlivre.com.br/como-instalar-o-docker-compose-no-ubuntu-22-04/) para o caso de você precisar de instalar o docker no seu ubuntu
-
-2 - Após rodar os comandos, talvez vocẽ precise rodar mais alguns comandos, segue abaixo
 ```bash
-sudo usermod -aG docker $USER
-sudo chmod 666 /var/run/docker.sock
+https://github.com/gabrielogregorio/rinha-de-compiler.git
 ```
 
-3 - Execute o build da aplicação
+Execute o docker
+
 ```bash
-make build # ou make b
+docker build -t rinha .
+docker run rinha
 ```
 
-4 - No dockerfile você pode escolher o arquivo que quer executar `CMD [ "node", "./dist/runner.js", "./files/combination.json" ]`
+## Extras
 
 ## Execução do interpretador via cli
 
@@ -35,7 +33,6 @@ make build # ou make b
 
 ## Decisões Extras
 - Bun foi mais rápido do que nodejs
-- `CMD [ "node", "runner.js", "./files/fib.json" ]`
 
 ## Extras
 

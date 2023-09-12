@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "module": "commonjs",
     "lib": ["es2021"],
     "allowJs": true,
@@ -15,14 +15,7 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "baseUrl": ".",
-    "paths": {
-      "@/example/*": ["src/example/*"],
-      "@/constants/*": ["src/constants/*"],
-      "@/mocksExample/*": ["src/mocksExample/*"],
-      "@/helpers/*": ["src/helpers/*"],
-      "@/interfaces/*": ["src/interfaces/*"],
-      "mocksExample/*": ["src/mocksExample/*"]
-    }
+    "paths": {}
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/**/*.spec.ts"]
 }

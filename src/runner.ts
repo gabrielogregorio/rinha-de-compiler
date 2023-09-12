@@ -1,9 +1,7 @@
-import fNode from 'node:fs';
+import { readAst } from './readAst';
 import { interpreter } from './interpreter';
 
-const readAst = (path: string) => JSON.parse(fNode.readFileSync(path) as unknown as string);
-
-const runInterpreter = (path: string) => {
+export const runInterpreter = (path: string) => {
   try {
     const astTree = readAst(path);
     interpreter(astTree.expression, {});
