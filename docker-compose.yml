@@ -1,8 +1,8 @@
 version: '3.3'
 
 services:
-  interpreter_v1:
-    container_name: interpreter_v1
+  interpreter_ogregorio:
+    container_name: interpreter_ogregorio
     build:
       context: .
       dockerfile: ./Dockerfile

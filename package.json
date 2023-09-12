@@ -31,7 +31,8 @@
     "prepare": "husky install",
     "check": "tsc --noEmit",
     "lint": "eslint -c ./.eslintrc.js --ext '.ts' 'src/**'",
-    "format": "prettier src/* --write"
+    "format": "prettier src/* --write",
+    "b":"yarn build"
   },
   "engines": {
     "node": ">=8",

@@ -1,4 +1,3 @@
-/* eslint-disable eqeqeq */
 import { Expression } from './types';
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -11,34 +10,34 @@ export const interpreter = (expression: Expression, variables = {}) => {
     }
 
     case 'Binary':
-      if (expression.op == 'Eq') {
+      if (expression.op === 'Eq') {
         return interpreter(expression.lhs, variables) === interpreter(expression.rhs, variables);
       }
 
-      if (expression.op == 'Add') {
+      if (expression.op === 'Add') {
         return interpreter(expression.lhs, variables) + interpreter(expression.rhs, variables);
       }
 
-      if (expression.op == 'Sub') {
+      if (expression.op === 'Sub') {
         return interpreter(expression.lhs, variables) - interpreter(expression.rhs, variables);
       }
 
-      if (expression.op == 'Or') {
+      if (expression.op === 'Or') {
         return interpreter(expression.lhs, variables) || interpreter(expression.rhs, variables);
       }
 
-      if (expression.op == 'Lt') {
+      if (expression.op === 'Lt') {
         return interpreter(expression.lhs, variables) < interpreter(expression.rhs, variables);
       }
 
-      console.warn(expression);
-      throw new Error('Ops, operação não mapeada');
+      throw new Error(`unmapped operation ${expression}`);
 
     case 'If':
       return interpreter(
         interpreter(expression.condition, variables) ? expression.then : expression.otherwise,
         variables,
       );
+
     case 'Function':
       return (...args) => {
         const localScope = { ...variables };
@@ -74,7 +73,6 @@ export const interpreter = (expression: Expression, variables = {}) => {
       return interpreter(expression.callee, variables)(...args);
     }
     default:
-      console.error(expression);
-      throw new Error('Erro não mapeado');
+      throw new Error(`unmapped instruction ${expression}`);
   }
 };

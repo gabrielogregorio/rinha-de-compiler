@@ -2,11 +2,9 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package.json ./
-COPY yarn.lock ./yarn.lock
+COPY . /app
 
-COPY ./dist ./dist
-COPY ./files ./files
-
+RUN yarn
+RUN yarn build
 
 CMD [ "node", "./dist/runner.js", "./files/combination.json" ]

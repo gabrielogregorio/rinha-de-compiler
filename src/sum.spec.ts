@@ -1,7 +1,7 @@
 import { ExpressionBase } from './types';
 import { interpreter } from './interpreter';
 
-const programa: ExpressionBase = {
+const program: ExpressionBase = {
   expression: {
     kind: 'Let',
     name: {
@@ -82,8 +82,9 @@ const programa: ExpressionBase = {
   },
 };
 
-describe('', () => {
-  it('', () => {
-    expect(interpreter(programa.expression)).toEqual(15);
+describe('InterpreterSum', () => {
+  it('should run sum() ast and returns 15', () => {
+    const EXPECTED_RESULT_SUM = 15;
+    expect(interpreter(program.expression)).toEqual(EXPECTED_RESULT_SUM);
   });
 });

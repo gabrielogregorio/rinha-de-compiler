@@ -1,25 +1,25 @@
-import fs from 'node:fs';
+import fNode from 'node:fs';
 import { interpreter } from './interpreter';
 
-const filePath = process.argv.slice(2)[0];
+const readAst = (path: string) => JSON.parse(fNode.readFileSync(path) as unknown as string);
 
-const readAst = (filePathLocal) => JSON.parse(fs.readFileSync(filePathLocal) as unknown as string);
-// eslint-disable-next-line consistent-return
-const runInterpreter = (filePathLocal) => {
+const runInterpreter = (path: string) => {
   try {
-    const astTree = readAst(filePathLocal);
-    return interpreter(astTree.expression, {});
-  } catch (error) {
-    console.error('ops, algo deu errado:', error.message);
+    const astTree = readAst(path);
+    interpreter(astTree.expression, {});
+  } catch (error: unknown) {
+    console.error('Oops, an error occurred', error);
   }
 };
 
-const inicio = process.hrtime();
+const startTime = process.hrtime();
+const listArgsPosition = 2;
+const fileInterpreter = process.argv.slice(listArgsPosition)[0];
 
-runInterpreter(filePath);
+runInterpreter(fileInterpreter);
 
-const intervalo = process.hrtime(inicio);
+const NANOSECONDS_IN_A_SECOND = 1e9;
+const endTime = process.hrtime(startTime);
+const totalSeconds = endTime[0] + endTime[1] / NANOSECONDS_IN_A_SECOND;
 
-const segundosTotais = intervalo[0] + intervalo[1] / 1e9;
-
-console.log(`Tempo de execução: ${segundosTotais}s `);
+console.log(`\nExecution in ${totalSeconds}s `);
