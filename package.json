@@ -4,10 +4,7 @@
   "description": "Generate documentation from tests",
   "author": "Gabriel Gregorio da Silva",
   "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gabrielogregorio/docbytest.git"
-  },
+  "repository": "git+https://github.com/gabrielogregorio/docbytest.git",
   "keywords": [
     "documentation",
     "tests",

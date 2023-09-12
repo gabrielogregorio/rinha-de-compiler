@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  interpreter_v1:
+    container_name: interpreter_v1
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/usr/src/app/
+
+volumes:
+  pg_data:
