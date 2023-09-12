@@ -1,4 +1,4 @@
-import { interpret } from '.';
+import { interpreter } from '.';
 
 const programSum = {
   expression: {
@@ -83,6 +83,6 @@ const programSum = {
 
 describe('', () => {
   it('', () => {
-    expect(interpret({}, programSum.expression)).toEqual(15);
+    expect(interpreter({}, programSum.expression)).toEqual(15);
   });
 });

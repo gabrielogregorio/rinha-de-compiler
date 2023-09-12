@@ -6,42 +6,42 @@ const handleGetInteger = (value: number): number => value;
 
 const handleLogicOperations = (variables: any, expr: any) => {
   if (expr.op === 'Eq') {
-    return interpret(variables, expr.lhs) === interpret(variables, expr.rhs);
+    return interpreter(variables, expr.lhs) === interpreter(variables, expr.rhs);
   }
 
   if (expr.op === 'Add') {
-    return interpret(variables, expr.lhs) + interpret(variables, expr.rhs);
+    return interpreter(variables, expr.lhs) + interpreter(variables, expr.rhs);
   }
 
   if (expr.op === 'Sub') {
-    return interpret(variables, expr.lhs) - interpret(variables, expr.rhs);
+    return interpreter(variables, expr.lhs) - interpreter(variables, expr.rhs);
   }
 
   if (expr.op === 'Or') {
-    return interpret(variables, expr.lhs) || interpret(variables, expr.rhs);
+    return interpreter(variables, expr.lhs) || interpreter(variables, expr.rhs);
   }
 
   if (expr.op === 'Lt') {
-    return interpret(variables, expr.lhs) < interpret(variables, expr.rhs);
+    return interpreter(variables, expr.lhs) < interpreter(variables, expr.rhs);
   }
 
   if (expr.op === 'Rt') {
-    return interpret(variables, expr.lhs) > interpret(variables, expr.rhs);
+    return interpreter(variables, expr.lhs) > interpreter(variables, expr.rhs);
   }
 
   throw new Error('Invalid Logic');
 };
 
-const handleCondictions = (variables: any, expr: any) => {
+const handleConditions = (variables: any, expr: any) => {
   // eslint-disable-next-line no-use-before-define
-  if (interpret(variables, expr.condition)) {
-    return interpret(variables, expr.then);
+  if (interpreter(variables, expr.condition)) {
+    return interpreter(variables, expr.then);
   }
-  return interpret(variables, expr.otherwise);
+  return interpreter(variables, expr.otherwise);
 };
 
 // eslint-disable-next-line consistent-return
-export const interpret = (variables: any, expr: any) => {
+export const interpreter = (variables: any, expr: any) => {
   if (expr.kind === 'Var') {
     return handleGetVariable(variables, expr.text);
   }
@@ -55,7 +55,7 @@ export const interpret = (variables: any, expr: any) => {
   }
 
   if (expr.kind === 'If') {
-    return handleCondictions(variables, expr);
+    return handleConditions(variables, expr);
   }
 
   if (expr.kind === 'Function') {
@@ -64,27 +64,27 @@ export const interpret = (variables: any, expr: any) => {
       for (let counter = 0; counter < expr.parameters.length; counter += 1) {
         localVariables[expr.parameters[counter].text] = args[counter];
       }
-      return interpret(localVariables, expr.value);
+      return interpreter(localVariables, expr.value);
     };
   }
 
   if (expr.kind === 'Call') {
-    const fn = interpret(variables, expr.callee) as Function;
-    const argValues = expr.arguments.map((arg) => interpret(variables, arg));
+    const fn = interpreter(variables, expr.callee) as Function;
+    const argValues = expr.arguments.map((arg) => interpreter(variables, arg));
     return fn(...argValues);
   }
 
   if (expr.kind === 'Print') {
-    const result = interpret(variables, expr.value);
+    const result = interpreter(variables, expr.value);
     console.log(result);
     return result;
   }
 
   if (expr.kind === 'Let') {
     // eslint-disable-next-line no-param-reassign
-    variables[expr.name.text] = interpret(variables, expr.value);
+    variables[expr.name.text] = interpreter(variables, expr.value);
     if (expr.next) {
-      return interpret(variables, expr.next);
+      return interpreter(variables, expr.next);
     }
   }
 };

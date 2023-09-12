@@ -1,4 +1,4 @@
-import { interpret } from '.';
+import { interpreter } from '.';
 
 const combination = {
   name: 'files/combination.rinha',
@@ -365,6 +365,6 @@ const combination = {
 
 describe('', () => {
   it('', () => {
-    expect(interpret({}, combination.expression)).toEqual(45);
+    expect(interpreter({}, combination.expression)).toEqual(45);
   });
 });

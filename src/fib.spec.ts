@@ -1,4 +1,4 @@
-import { interpret } from '.';
+import { interpreter } from '.';
 
 const fib = {
   expression: {
@@ -100,6 +100,6 @@ const fib = {
 
 describe('Fibonnaci', () => {
   it('should accept correctly fibonnaci', () => {
-    expect(interpret({}, fib.expression)).toEqual(55);
+    expect(interpreter({}, fib.expression)).toEqual(55);
   });
 });
