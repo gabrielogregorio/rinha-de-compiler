@@ -1,138 +1,37 @@
 /* eslint-disable no-use-before-define */
 
-export const programSum = {
-  expression: {
-    kind: 'Let',
-    name: {
-      text: 'sum',
-    },
-    value: {
-      kind: 'Function',
-      parameters: [
-        {
-          text: 'n',
-        },
-      ],
-      value: {
-        kind: 'If',
-        condition: {
-          kind: 'Binary',
-          lhs: {
-            kind: 'Var',
-            text: 'n',
-          },
-          op: 'Eq',
-          rhs: {
-            kind: 'Int',
-            value: 1,
-          },
-        },
-        then: {
-          kind: 'Var',
-          text: 'n',
-        },
-        otherwise: {
-          kind: 'Binary',
-          lhs: {
-            kind: 'Var',
-            text: 'n',
-          },
-          op: 'Add',
-          rhs: {
-            kind: 'Call',
-            callee: {
-              kind: 'Var',
-              text: 'sum',
-            },
-            arguments: [
-              {
-                kind: 'Binary',
-                lhs: {
-                  kind: 'Var',
-                  text: 'n',
-                },
-                op: 'Sub',
-                rhs: {
-                  kind: 'Int',
-                  value: 1,
-                },
-              },
-            ],
-          },
-        },
-      },
-    },
-    next: {
-      kind: 'Print',
-      value: {
-        kind: 'Call',
-        callee: {
-          kind: 'Var',
-          text: 'sum',
-        },
-        arguments: [
-          {
-            kind: 'Int',
-            value: 5,
-          },
-        ],
-      },
-    },
-  },
-};
+const handleGetVariable = (variables: any, nameVar: string): string | number | boolean => variables[nameVar];
 
-const variables = {};
+const handleGetInteger = (value: number): number => value;
 
-export const handleGetVariable = (nameVar: string): string | number | boolean => variables[nameVar];
-
-export const handleGetInteger = (value: number): boolean => value;
-
-const handleLogicOperations = (expr) => {
+const handleLogicOperations = (variables: any, expr: any) => {
   if (expr.op === 'Eq') {
-    return interpreter(expr.lhs) === interpreter(expr.rhs);
+    return interpret(variables, expr.lhs) === interpret(variables, expr.rhs);
   }
 
   if (expr.op === 'Add') {
-    return interpreter(expr.lhs) + interpreter(expr.rhs);
+    return interpret(variables, expr.lhs) + interpret(variables, expr.rhs);
   }
 
   if (expr.op === 'Sub') {
-    return interpreter(expr.lhs) - interpreter(expr.rhs);
+    return interpret(variables, expr.lhs) - interpret(variables, expr.rhs);
   }
+
+  throw new Error('Invalid Logic');
 };
 
-const handleCondictions = (expr) => {
-  if (interpreter(expr.condition)) {
-    return interpreter(expr.then);
+const handleCondictions = (variables: any, expr: any) => {
+  // eslint-disable-next-line no-use-before-define
+  if (interpret(variables, expr.condition)) {
+    return interpret(variables, expr.then);
   }
-  return interpreter(expr.otherwise);
+  return interpret(variables, expr.otherwise);
 };
 
-const handleDeclarationFunctions =
-  (expr) =>
-  (...args) => {
-    for (let counter = 0; counter < expr.parameters.length; counter++) {
-      variables[expr.parameters[counter].text] = args[counter];
-    }
-    return interpreter(expr.value);
-  };
-
-const handleCallFuncions = (expr) => {
-  const functionItem = interpreter(expr.callee);
-  const argValues = expr.arguments.map(interpreter);
-  return functionItem(...argValues);
-};
-
-const handleDeclarateVariable = (expr) => {
-  variables[expr.name.text] = interpreter(expr.value);
-  if (expr.next) {
-    return interpreter(expr.next);
-  }
-};
-
-const interpreter = (expr) => {
+// eslint-disable-next-line consistent-return
+export const interpret = (variables: any, expr: any) => {
   if (expr.kind === 'Var') {
-    return handleGetVariable(expr.text);
+    return handleGetVariable(variables, expr.text);
   }
 
   if (expr.kind === 'Int') {
@@ -140,30 +39,40 @@ const interpreter = (expr) => {
   }
 
   if (expr.kind === 'Binary') {
-    return handleLogicOperations(expr);
+    return handleLogicOperations(variables, expr);
   }
 
   if (expr.kind === 'If') {
-    return handleCondictions(expr);
+    return handleCondictions(variables, expr);
   }
 
   if (expr.kind === 'Function') {
-    return handleDeclarationFunctions(expr);
+    return (...args) => {
+      const localVariables = { ...variables };
+      for (let counter = 0; counter < expr.parameters.length; counter += 1) {
+        localVariables[expr.parameters[counter].text] = args[counter];
+      }
+      return interpret(localVariables, expr.value);
+    };
   }
 
   if (expr.kind === 'Call') {
-    return handleCallFuncions(expr);
+    const fn = interpret(variables, expr.callee) as Function;
+    const argValues = expr.arguments.map((arg) => interpret(variables, arg));
+    return fn(...argValues);
   }
 
   if (expr.kind === 'Print') {
-    return console.log(interpreter(expr.value));
+    const result = interpret(variables, expr.value);
+    console.log(result);
+    return result;
   }
 
   if (expr.kind === 'Let') {
-    return handleDeclarateVariable(expr);
+    // eslint-disable-next-line no-param-reassign
+    variables[expr.name.text] = interpret(variables, expr.value);
+    if (expr.next) {
+      return interpret(variables, expr.next);
+    }
   }
-
-  return new Error('Ops');
 };
-
-interpreter(programSum.expression);
