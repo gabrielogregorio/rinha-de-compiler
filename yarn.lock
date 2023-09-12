@@ -954,7 +954,7 @@
 
 "@babel/preset-typescript@^7.17.12":
   version "7.22.15"
-  resolved "https://registry.npmjs.org/@babel/preset-typescript/-/preset-typescript-7.22.15.tgz"
+  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.22.15.tgz#43db30516fae1d417d748105a0bc95f637239d48"
   integrity sha512-HblhNmh6yM+cU4VwbBRpxFhxsTdfS1zsvH9W+gEjD0ARV9+8B4sNfpI6GuhePti84nuvhiwKS539jKPFHskA9A==
   dependencies:
     "@babel/helper-plugin-utils" "^7.22.5"

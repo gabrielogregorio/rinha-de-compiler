@@ -35,48 +35,43 @@ export const interpreter = (expression: Expression, variables = {}) => {
       throw new Error('Ops, operação não mapeada');
 
     case 'If':
-      if (interpreter(expression.condition, variables)) {
-        return interpreter(expression.then, variables);
-      }
-      return interpreter(expression.otherwise, variables);
-
+      return interpreter(
+        interpreter(expression.condition, variables) ? expression.then : expression.otherwise,
+        variables,
+      );
     case 'Function':
       return (...args) => {
         const localScope = { ...variables };
-        expression.parameters.forEach((paramter, index) => {
-          localScope[paramter.text] = args[index];
-        });
+
+        for (let count = 0; count < expression.parameters.length; count += 1) {
+          localScope[expression.parameters[count].text] = args[count];
+        }
 
         return interpreter(expression.value, localScope);
       };
 
     case 'Let':
-      // @ts-ignore
       // eslint-disable-next-line no-param-reassign
       variables[expression.name.text] = interpreter(expression.value, variables);
 
       return interpreter(expression.next, variables);
 
     case 'Int':
+    case 'Str':
+    case 'Bool':
       return expression.value;
 
     case 'Var':
       return variables[expression.text];
 
-    case 'Str':
-      return expression.value;
-
-    case 'Bool':
-      return expression.value;
-
     case 'Call': {
-      const argumentsLocal: any[] = [];
+      const args = new Array(expression.arguments.length);
 
       for (let count = 0; count < expression.arguments.length; count += 1) {
-        argumentsLocal[count] = interpreter(expression.arguments[count], variables);
+        args[count] = interpreter(expression.arguments[count], variables);
       }
 
-      return interpreter(expression.callee, variables)(...argumentsLocal);
+      return interpreter(expression.callee, variables)(...args);
     }
     default:
       console.error(expression);

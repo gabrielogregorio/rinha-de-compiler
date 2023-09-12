@@ -1,5 +1,5 @@
 import { ExpressionBase } from './types';
-import { interpreter } from '.';
+import { interpreter } from './interpreter';
 
 const programa: ExpressionBase = {
   expression: {

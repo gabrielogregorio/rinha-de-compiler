@@ -17,7 +17,7 @@
     "url": "https://github.com/gabrielogregorio/docbytest/issues"
   },
   "homepage": "https://github.com/gabrielogregorio/docbytest#readme",
-  "main": "./dist/index.js",
+  "main": "./dist/runner.js",
   "scripts": {
     "build": "tsc && tsc-alias",
     "build:watch": "tsc && (concurrently \"tsc -w\" \"tsc-alias -w\")",

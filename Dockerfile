@@ -1,12 +1,12 @@
-FROM node:16-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
 COPY package.json ./
 COPY yarn.lock ./yarn.lock
 
-COPY dist ./dist
+COPY ./dist ./dist
 COPY ./files ./files
-COPY ./runner.js ./runner.js
 
-CMD [ "node", "runner.js", "./files/fib.json" ]
+
+CMD [ "node", "./dist/runner.js", "./files/combination.json" ]

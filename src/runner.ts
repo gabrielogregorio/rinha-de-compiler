@@ -1,25 +1,22 @@
-const fs = require('fs');
-const interpreter = require('./dist/index')
+import fs from 'node:fs';
+import { interpreter } from './interpreter';
 
 const filePath = process.argv.slice(2)[0];
 
-const readAst = (filePathLocal) => {
-  return JSON.parse(fs.readFileSync(filePathLocal))
-}
+const readAst = (filePathLocal) => JSON.parse(fs.readFileSync(filePathLocal) as unknown as string);
+// eslint-disable-next-line consistent-return
 const runInterpreter = (filePathLocal) => {
   try {
-    const astTree = readAst(filePathLocal)
-    return interpreter.interpreter(astTree.expression, {});
+    const astTree = readAst(filePathLocal);
+    return interpreter(astTree.expression, {});
   } catch (error) {
     console.error('ops, algo deu errado:', error.message);
-    return
   }
-
-}
+};
 
 const inicio = process.hrtime();
 
-runInterpreter(filePath)
+runInterpreter(filePath);
 
 const intervalo = process.hrtime(inicio);
 
