@@ -1,5 +1,7 @@
+import { Expression } from './types';
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
-export const interpreter = (expression, variables = {}) => {
+export const interpreter = (expression: Expression, variables = {}) => {
   if (expression.kind === 'Print') {
     const value = interpreter(expression.value, variables);
     console.log(value);
@@ -65,6 +67,14 @@ export const interpreter = (expression, variables = {}) => {
     return variables[expression.text];
   }
 
+  if (expression.kind === 'Str') {
+    return expression.value;
+  }
+
+  if (expression.kind === 'Bool') {
+    return expression.value;
+  }
+
   if (expression.kind === 'Call') {
     const argumentsLocal = [];
 
@@ -73,10 +83,6 @@ export const interpreter = (expression, variables = {}) => {
     }
 
     return interpreter(expression.callee, variables)(...argumentsLocal);
-  }
-
-  if (expression.next) {
-    return interpreter(expression.next, variables);
   }
 
   console.error(expression);

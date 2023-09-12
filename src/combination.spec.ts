@@ -1,7 +1,7 @@
-import { Expression } from './types';
+import { ExpressionBase } from './types';
 import { interpreter } from '.';
 
-const programa: Expression = {
+const programa: ExpressionBase = {
   expression: {
     kind: 'Let',
     name: {

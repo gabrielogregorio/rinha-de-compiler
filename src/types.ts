@@ -1,6 +1,6 @@
 /* eslint-disable no-use-before-define */
 
-type ExpressAnonymousFunction = {
+type ExpressionFunction = {
   kind: 'Function';
   parameters: {
     text: string;
@@ -8,27 +8,27 @@ type ExpressAnonymousFunction = {
   value: Expression;
 };
 
-type ExpressionBoolean = {
+type ExpressionBool = {
   kind: 'Bool';
-  value: number;
+  value: boolean;
 };
 
-type ExpressionInteger = {
+type ExpressionInt = {
   kind: 'Int';
   value: number;
 };
 
-type ExpressionString = {
+type ExpressionStr = {
   kind: 'Str';
   value: string;
 };
 
-type ExpressionNameVariable = {
+type ExpressionVar = {
   kind: 'Var';
   text: string;
 };
 
-type ExpressionCallFunction = {
+type ExpressionCall = {
   kind: 'Call';
   callee: Expression;
   arguments: Expression[];
@@ -36,18 +36,18 @@ type ExpressionCallFunction = {
 
 type Operators = 'Add' | 'Sub' | 'Mul' | 'Div' | 'Rem' | 'Eq' | 'Neq' | 'Lt' | 'Gt' | 'Lte' | 'Gte' | 'And' | 'Or';
 
-type ExpressionBinaryOperator = {
+type ExpressionBinary = {
   kind: 'Binary';
   lhs: Expression;
   op: Operators;
   rhs: Expression;
 };
 
-type ExpressionCondition = {
+type ExpressionIf = {
   kind: 'If';
-  condition: ExpressionBinaryOperator;
+  condition: ExpressionBinary;
   then: Expression;
-  otherwise: ExpressionBinaryOperator;
+  otherwise: ExpressionBinary;
 };
 
 type ExpressionPrint = {
@@ -55,7 +55,7 @@ type ExpressionPrint = {
   value: Expression;
 };
 
-type ExpressionDeclareLet = {
+type ExpressionLet = {
   kind: 'Let';
   name: {
     text: string;
@@ -64,21 +64,51 @@ type ExpressionDeclareLet = {
   next: Expression;
 };
 
-export type Base = {
+export type ExpressionBase = {
   expression: Expression;
 };
 
-export type Expression =
-  | Base
-  | ExpressionDeclareLet
-  | ExpressionCondition
-  | ExpressAnonymousFunction
-  | ExpressionNameVariable
-  | ExpressionBinaryOperator
-  | ExpressionCallFunction
-  | ExpressionInteger
-  | ExpressionString
+type ExpressionFirst = {
+  kind: 'First';
+  value: TermType;
+};
+
+type ExpressionSecond = {
+  kind: 'Second';
+  value: TermType;
+};
+
+type ExpressionTuple = {
+  kind: 'Tuple';
+  first: TermType;
+  second: TermType;
+};
+
+type TermType =
+  | ExpressionInt
+  | ExpressionStr
+  | ExpressionCall
+  | ExpressionBinary
+  | ExpressionFunction
+  | ExpressionLet
+  | ExpressionIf
   | ExpressionPrint
-  | ExpressionBoolean;
+  | ExpressionFirst
+  | ExpressionSecond
+  | ExpressionBool
+  | ExpressionTuple
+  | ExpressionVar;
+
+export type Expression =
+  | ExpressionLet
+  | ExpressionIf
+  | ExpressionFunction
+  | ExpressionVar
+  | ExpressionBinary
+  | ExpressionCall
+  | ExpressionInt
+  | ExpressionStr
+  | ExpressionPrint
+  | ExpressionBool;
 
 // FINISH IMPLEMENTATION SPECIFICATION...
