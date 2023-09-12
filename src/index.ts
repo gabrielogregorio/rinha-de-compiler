@@ -21,7 +21,13 @@ const handleLogicOperations = (variables: any, expr: any) => {
     return interpret(variables, expr.lhs) || interpret(variables, expr.rhs);
   }
 
-  console.log(expr.op);
+  if (expr.op === 'Lt') {
+    return interpret(variables, expr.lhs) < interpret(variables, expr.rhs);
+  }
+
+  if (expr.op === 'Rt') {
+    return interpret(variables, expr.lhs) > interpret(variables, expr.rhs);
+  }
 
   throw new Error('Invalid Logic');
 };
