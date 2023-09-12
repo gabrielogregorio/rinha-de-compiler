@@ -25,29 +25,25 @@ echo "${Cyan}                   STARTING PRE-COMMIT                   ${NOCOLOR}
 echo "${Cyan}=========================================================\n${NOCOLOR}"
 
 echo "${Yellow}.....................INSTALL PACKAGES....................${NOCOLOR}\n"
-npm install
+yarn
 
 echo "\n${Yellow}......................AUDIT PACKAGES.....................${NOCOLOR}\n"
-npm audit
-
-echo "\n${Yellow}.......................CLEAR DIRT........................${NOCOLOR}"
-npm run clear:dirt
+yarn audit
 
 echo "\n${Yellow}....................PRETTIER CHECKING....................${NOCOLOR}"
-npm run format
+yarn format
 
 echo "\n${Yellow}...................TYPESCRIPT CHECKING...................${NOCOLOR}"
-npm run check
+yarn check
 
 echo "\n${Yellow}...................ESLINT CHECKING.......................${NOCOLOR}"
-npm run lint
+yarn lint
 
 echo "\n${Yellow}.....................BUILDING APP........................${NOCOLOR}"
-npm run build
-
+yarn build
 
 echo "\n${Yellow}...............UNIT TEST AND COVERAGE....................${NOCOLOR}"
-npm run jest:coverage
+yarn jest:coverage
 
 
 

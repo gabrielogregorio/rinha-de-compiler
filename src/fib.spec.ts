@@ -1,7 +1,7 @@
 import { Expression } from './types';
 import { interpreter } from '.';
 
-const fib: Expression = {
+const programa: Expression = {
   expression: {
     kind: 'Let',
     name: {
@@ -99,8 +99,8 @@ const fib: Expression = {
   },
 };
 
-describe('Fibonnaci', () => {
-  it('should accept correctly fibonnaci', () => {
-    expect(interpreter({}, fib.expression)).toEqual(55);
+describe('', () => {
+  it('', () => {
+    expect(interpreter(programa.expression)).toEqual(55);
   });
 });

@@ -1,90 +1,84 @@
-/* eslint-disable no-use-before-define */
-
-const handleGetVariable = (variables: any, nameVar: string): string | number | boolean => variables[nameVar];
-
-const handleGetInteger = (value: number): number => value;
-
-const handleLogicOperations = (variables: any, expr: any) => {
-  if (expr.op === 'Eq') {
-    return interpreter(variables, expr.lhs) === interpreter(variables, expr.rhs);
+// eslint-disable-next-line sonarjs/cognitive-complexity
+export const interpreter = (expression, variables = {}) => {
+  if (expression.kind === 'Print') {
+    const value = interpreter(expression.value, variables);
+    console.log(value);
+    return value;
   }
 
-  if (expr.op === 'Add') {
-    return interpreter(variables, expr.lhs) + interpreter(variables, expr.rhs);
+  if (expression.kind === 'Binary') {
+    if (expression.op === 'Eq') {
+      return interpreter(expression.lhs, variables) === interpreter(expression.rhs, variables);
+    }
+
+    if (expression.op === 'Add') {
+      return interpreter(expression.lhs, variables) + interpreter(expression.rhs, variables);
+    }
+
+    if (expression.op === 'Sub') {
+      return interpreter(expression.lhs, variables) - interpreter(expression.rhs, variables);
+    }
+
+    if (expression.op === 'Or') {
+      return interpreter(expression.lhs, variables) || interpreter(expression.rhs, variables);
+    }
+
+    if (expression.op === 'Lt') {
+      return interpreter(expression.lhs, variables) < interpreter(expression.rhs, variables);
+    }
+
+    console.warn(expression);
+    throw new Error('Ops, operação não mapeada');
   }
 
-  if (expr.op === 'Sub') {
-    return interpreter(variables, expr.lhs) - interpreter(variables, expr.rhs);
+  if (expression.kind === 'If') {
+    if (interpreter(expression.condition, variables)) {
+      return interpreter(expression.then, variables);
+    }
+    return interpreter(expression.otherwise, variables);
   }
 
-  if (expr.op === 'Or') {
-    return interpreter(variables, expr.lhs) || interpreter(variables, expr.rhs);
-  }
-
-  if (expr.op === 'Lt') {
-    return interpreter(variables, expr.lhs) < interpreter(variables, expr.rhs);
-  }
-
-  if (expr.op === 'Rt') {
-    return interpreter(variables, expr.lhs) > interpreter(variables, expr.rhs);
-  }
-
-  throw new Error('Invalid Logic');
-};
-
-const handleConditions = (variables: any, expr: any) => {
-  // eslint-disable-next-line no-use-before-define
-  if (interpreter(variables, expr.condition)) {
-    return interpreter(variables, expr.then);
-  }
-  return interpreter(variables, expr.otherwise);
-};
-
-// eslint-disable-next-line consistent-return
-export const interpreter = (variables: any, expr: any) => {
-  if (expr.kind === 'Var') {
-    return handleGetVariable(variables, expr.text);
-  }
-
-  if (expr.kind === 'Int') {
-    return handleGetInteger(expr.value);
-  }
-
-  if (expr.kind === 'Binary') {
-    return handleLogicOperations(variables, expr);
-  }
-
-  if (expr.kind === 'If') {
-    return handleConditions(variables, expr);
-  }
-
-  if (expr.kind === 'Function') {
+  if (expression.kind === 'Function') {
     return (...args) => {
-      const localVariables = { ...variables };
-      for (let counter = 0; counter < expr.parameters.length; counter += 1) {
-        localVariables[expr.parameters[counter].text] = args[counter];
-      }
-      return interpreter(localVariables, expr.value);
+      const localScope = { ...variables };
+      expression.parameters.forEach((paramter, index) => {
+        localScope[paramter.text] = args[index];
+      });
+
+      return interpreter(expression.value, localScope);
     };
   }
 
-  if (expr.kind === 'Call') {
-    const fn = interpreter(variables, expr.callee) as Function;
-    const argValues = expr.arguments.map((arg) => interpreter(variables, arg));
-    return fn(...argValues);
-  }
-
-  if (expr.kind === 'Print') {
-    const result = interpreter(variables, expr.value);
-    console.log(result);
-    return result;
-  }
-
-  if (expr.kind === 'Let') {
+  if (expression.kind === 'Let') {
+    // @ts-ignore
     // eslint-disable-next-line no-param-reassign
-    variables[expr.name.text] = interpreter(variables, expr.value);
-    if (expr.next) {
-      return interpreter(variables, expr.next);
-    }
+    variables[expression.name.text] = interpreter(expression.value, variables);
+
+    return interpreter(expression.next, variables);
   }
+
+  if (expression.kind === 'Int') {
+    return expression.value;
+  }
+
+  if (expression.kind === 'Var') {
+    return variables[expression.text];
+  }
+
+  if (expression.kind === 'Call') {
+    const argumentsLocal = [];
+
+    for (let count = 0; count < expression.arguments.length; count += 1) {
+      argumentsLocal[count] = interpreter(expression.arguments[count], variables);
+    }
+
+    return interpreter(expression.callee, variables)(...argumentsLocal);
+  }
+
+  if (expression.next) {
+    return interpreter(expression.next, variables);
+  }
+
+  console.error(expression);
+  throw new Error('Erro não mapeado');
 };

@@ -33,7 +33,7 @@
     "publish-npm": "npm run jest && rm -rf ./build && npm run build && npm publish",
     "prepare": "husky install",
     "check": "tsc --noEmit",
-    "lint": "eslint -c ./.eslintrc.json --ext '.ts' 'src/**'",
+    "lint": "eslint -c ./.eslintrc.js --ext '.ts' 'src/**'",
     "format": "prettier src/* --write"
   },
   "engines": {
@@ -75,5 +75,8 @@
     "tsc-alias": "^1.8.1",
     "tsconfig-paths": "^4.0.0",
     "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "eslint-plugin-n": "^16.1.0"
   }
 }

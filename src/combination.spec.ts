@@ -1,7 +1,7 @@
-import { Expression } from 'src/types';
+import { Expression } from './types';
 import { interpreter } from '.';
 
-const combination: Expression = {
+const programa: Expression = {
   expression: {
     kind: 'Let',
     name: {
@@ -160,6 +160,6 @@ const combination: Expression = {
 
 describe('', () => {
   it('', () => {
-    expect(interpreter({}, combination.expression)).toEqual(45);
+    expect(interpreter(programa.expression)).toEqual(45);
   });
 });
