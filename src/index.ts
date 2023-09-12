@@ -17,6 +17,12 @@ const handleLogicOperations = (variables: any, expr: any) => {
     return interpret(variables, expr.lhs) - interpret(variables, expr.rhs);
   }
 
+  if (expr.op === 'Or') {
+    return interpret(variables, expr.lhs) || interpret(variables, expr.rhs);
+  }
+
+  console.log(expr.op);
+
   throw new Error('Invalid Logic');
 };
 
