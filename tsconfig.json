@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es2021"],
+    "allowJs": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noErrorTruncation": true,
+    "outDir": "./dist",
+    "declaration": true,
+    "rootDir": "./src",
+    "removeComments": true,
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/example/*": ["src/example/*"],
+      "@/constants/*": ["src/constants/*"],
+      "@/mocksExample/*": ["src/mocksExample/*"],
+      "@/helpers/*": ["src/helpers/*"],
+      "@/interfaces/*": ["src/interfaces/*"],
+      "mocksExample/*": ["src/mocksExample/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}
