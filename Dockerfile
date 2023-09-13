@@ -2,11 +2,11 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-
 COPY . .
 
-RUN yarn
-RUN yarn build
+RUN npm i --global pnpm
 
+RUN pnpm i
+RUN pnpm run build
 
 CMD [ "node", "./dist/index.js" ]

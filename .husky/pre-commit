@@ -25,25 +25,25 @@ echo "${Cyan}                   STARTING PRE-COMMIT                   ${NOCOLOR}
 echo "${Cyan}=========================================================\n${NOCOLOR}"
 
 echo "${Yellow}.....................INSTALL PACKAGES....................${NOCOLOR}\n"
-yarn
+pnpm i
 
 echo "\n${Yellow}......................AUDIT PACKAGES.....................${NOCOLOR}\n"
-yarn audit
+pnpm audit
 
 echo "\n${Yellow}....................PRETTIER CHECKING....................${NOCOLOR}"
-yarn format
+pnpm format
 
 echo "\n${Yellow}...................TYPESCRIPT CHECKING...................${NOCOLOR}"
-yarn check
+pnpm check
 
 echo "\n${Yellow}...................ESLINT CHECKING.......................${NOCOLOR}"
-yarn lint
+pnpm lint
 
 echo "\n${Yellow}.....................BUILDING APP........................${NOCOLOR}"
-yarn build
+pnpm build
 
 echo "\n${Yellow}...............UNIT TEST AND COVERAGE....................${NOCOLOR}"
-yarn jest:coverage
+pnpm jest:coverage
 
 
 
