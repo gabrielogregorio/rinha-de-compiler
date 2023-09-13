@@ -25,9 +25,10 @@ docker run rinha
 ## Execução do interpretador via cli
 
 1. Use o nodejs 16.14 ou superior (recomendo o nodejs 20).
-2. Instale os pacotes `yarn`
-3. Faça o build do interpretador `yarn build`
-4. Execute interpretador buildado informando o arquivo alvo `node dist/runner.js ./files/combination.json`
+2. Instale o pnpm globalmente `npm i --global pnpm`
+3. Instale os pacotes `pnpm i`
+4. Faça o build do interpretador `pnpm build`
+5. Execute interpretador buildado informando o arquivo alvo `node dist/runner.js ./files/combination.json`
 
 
 ## Decisões
