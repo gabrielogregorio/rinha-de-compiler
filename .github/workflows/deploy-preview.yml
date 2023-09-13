@@ -129,8 +129,8 @@ jobs:
 
           mkdir -p preview/${{ steps.set_environments.outputs.build_directory }}
 
-          echo "move build to preview"
-          cp -r build/* preview/${{ steps.set_environments.outputs.build_directory }}
+          echo "move dist to preview"
+          cp -r dist/* preview/${{ steps.set_environments.outputs.build_directory }}
 
           echo "deploy do gh pages"
           npx gh-pages -d preview --add -u "github-actions-bot <support+actions@github.com>"
