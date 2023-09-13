@@ -73,5 +73,22 @@ export type ExpressionBase = {
     expression: Expression;
     location?: locationType;
 };
-export type Expression = ExpressionLet | ExpressionIf | ExpressionFunction | ExpressionVar | ExpressionBinary | ExpressionCall | ExpressionInt | ExpressionStr | ExpressionPrint | ExpressionBool;
+type ExpressionFirst = {
+    kind: 'First';
+    value: TermType;
+    location?: locationType;
+};
+type ExpressionSecond = {
+    kind: 'Second';
+    value: TermType;
+    location?: locationType;
+};
+type ExpressionTuple = {
+    kind: 'Tuple';
+    first: TermType;
+    second: TermType;
+    location?: locationType;
+};
+export type TermType = ExpressionInt | ExpressionStr | ExpressionCall | ExpressionBinary | ExpressionFunction | ExpressionLet | ExpressionIf | ExpressionPrint | ExpressionFirst | ExpressionSecond | ExpressionBool | ExpressionVar;
+export type Expression = ExpressionTuple | ExpressionLet | ExpressionIf | ExpressionFunction | ExpressionVar | ExpressionBinary | ExpressionCall | ExpressionInt | ExpressionStr | ExpressionPrint | ExpressionBool;
 export {};

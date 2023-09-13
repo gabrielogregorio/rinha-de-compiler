@@ -11,8 +11,15 @@ const interpreter = (expression, variables = {}) => {
     switch (expression.kind) {
         case 'Print': {
             const value = (0, exports.interpreter)(expression.value, variables);
-            console.log(value);
-            return value;
+            let finalValue = value;
+            if (typeof value === 'function') {
+                finalValue = '<#closure>';
+            }
+            if (Array.isArray(value)) {
+                finalValue = '(term, term)';
+            }
+            console.log(finalValue);
+            return finalValue;
         }
         case 'Binary':
             switch (expression.op) {
@@ -29,6 +36,9 @@ const interpreter = (expression, variables = {}) => {
                 default:
                     throw new Error(`unmapped operation ${expression}`);
             }
+        case 'Tuple': {
+            return [(0, exports.interpreter)(expression.first, variables), (0, exports.interpreter)(expression.second, variables)];
+        }
         case 'If':
             return (0, exports.interpreter)((0, exports.interpreter)(expression.condition, variables) ? expression.then : expression.otherwise, variables);
         case 'Function':

@@ -1,2 +1,2 @@
-import { Expression } from './types';
-export declare const interpreter: (expression: Expression, variables?: {}) => any;
+import { Expression, TermType } from './types';
+export declare const interpreter: (expression: Expression | TermType, variables?: {}) => any;
