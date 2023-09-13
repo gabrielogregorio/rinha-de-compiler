@@ -12,9 +12,8 @@ export const runInterpreter = (path: string) => {
 
 const startTime = process.hrtime();
 const listArgsPosition = 2;
-const fileInterpreter = process.argv.slice(listArgsPosition)[0];
 
-runInterpreter(fileInterpreter);
+runInterpreter(process.argv.slice(listArgsPosition)[0]);
 
 const NANOSECONDS_IN_A_SECOND = 1e9;
 const endTime = process.hrtime(startTime);

@@ -1,4 +1,4 @@
-import { Expression } from './types';
+import { Expression, TermType } from './types';
 
 const generateCacheKey = (calleeText, args, variables) => {
   const argsKey = JSON.stringify(args);
@@ -10,12 +10,22 @@ const generateCacheKey = (calleeText, args, variables) => {
 const cacheCalledFunctions = {};
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
-export const interpreter = (expression: Expression, variables = {}) => {
+export const interpreter = (expression: Expression | TermType, variables = {}) => {
   switch (expression.kind) {
     case 'Print': {
       const value = interpreter(expression.value, variables);
-      console.log(value);
-      return value;
+
+      let finalValue = value;
+      if (typeof value === 'function') {
+        finalValue = '<#closure>';
+      }
+
+      if (Array.isArray(value)) {
+        finalValue = '(term, term)';
+      }
+
+      console.log(finalValue);
+      return finalValue;
     }
 
     case 'Binary':
@@ -40,6 +50,9 @@ export const interpreter = (expression: Expression, variables = {}) => {
           throw new Error(`unmapped operation ${expression}`);
       }
 
+    case 'Tuple': {
+      return [interpreter(expression.first, variables), interpreter(expression.second, variables)];
+    }
     case 'If':
       return interpreter(
         interpreter(expression.condition, variables) ? expression.then : expression.otherwise,
