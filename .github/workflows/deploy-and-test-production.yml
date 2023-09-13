@@ -1,0 +1,141 @@
+name: testing, linting and deploy
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        pnpm-version: [8.3.1]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: use pnpm ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+  unit_tests_and_up_coverage:
+    needs: install
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        pnpm-version: [8.3.1]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: use pnpm ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: restore node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: running tests and generate coverage
+        run: pnpm run jest:coverage
+
+  linting:
+    needs: install
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        pnpm-version: [8.3.1]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: use pnpm.js ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: restore node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: check eslint
+        run: pnpm run lint
+
+  lint_tsc:
+    needs: install
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        pnpm-version: [8.3.1]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: use pnpm.js ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: restore node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: check typescript
+        run: pnpm run check
+
+  audit:
+    needs: install
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        pnpm-version: [8.3.1]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: use pnpm.js ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: restore node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: audit packages
+        run: pnpm audit
