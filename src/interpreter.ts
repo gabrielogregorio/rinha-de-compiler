@@ -1,5 +1,7 @@
 import { Expression } from './types';
 
+const cacheCalledFunctions = {};
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const interpreter = (expression: Expression, variables = {}) => {
   switch (expression.kind) {
@@ -75,7 +77,19 @@ export const interpreter = (expression: Expression, variables = {}) => {
         count += 1;
       }
 
-      return interpreter(expression.callee, variables)(...args);
+      const argsKey = JSON.stringify(args);
+      const varsKey = JSON.stringify(variables);
+
+      // @ts-ignore
+      const backupResponse = cacheCalledFunctions[`${expression.callee.text}-${argsKey}-${varsKey}`];
+      if (backupResponse) {
+        return backupResponse;
+      }
+
+      const response = interpreter(expression.callee, variables)(...args);
+      // @ts-ignore
+      cacheCalledFunctions[`${expression.callee.text}-${argsKey}-${varsKey}`] = response;
+      return response;
     }
     default:
       throw new Error(`unmapped instruction ${expression}`);

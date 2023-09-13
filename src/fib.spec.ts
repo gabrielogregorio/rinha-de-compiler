@@ -91,7 +91,7 @@ const program: ExpressionBase = {
         arguments: [
           {
             kind: 'Int',
-            value: 10,
+            value: 1000,
           },
         ],
       },
@@ -101,7 +101,7 @@ const program: ExpressionBase = {
 
 describe('InterpreterFib', () => {
   it('should run fib() ast and returns 55', () => {
-    const EXPECTED_RESULT_FIB = 55;
+    const EXPECTED_RESULT_FIB = 4.346655768693743e208;
 
     expect(interpreter(program.expression)).toEqual(EXPECTED_RESULT_FIB);
   });
