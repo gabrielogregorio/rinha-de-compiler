@@ -1,5 +1,14 @@
 import { Expression } from './types';
 
+const generateCacheKey = (calleeText, args, variables) => {
+  const argsKey = JSON.stringify(args);
+  const varsKey = JSON.stringify(variables);
+
+  return `${calleeText}-${argsKey}-${varsKey}`;
+};
+
+const cacheCalledFunctions = {};
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const interpreter = (expression: Expression, variables = {}) => {
   switch (expression.kind) {
@@ -10,27 +19,26 @@ export const interpreter = (expression: Expression, variables = {}) => {
     }
 
     case 'Binary':
-      if (expression.op === 'Eq') {
-        return interpreter(expression.lhs, variables) === interpreter(expression.rhs, variables);
-      }
+      // eslint-disable-next-line sonarjs/no-nested-switch
+      switch (expression.op) {
+        case 'Eq':
+          return interpreter(expression.lhs, variables) === interpreter(expression.rhs, variables);
 
-      if (expression.op === 'Add') {
-        return interpreter(expression.lhs, variables) + interpreter(expression.rhs, variables);
-      }
+        case 'Add':
+          return interpreter(expression.lhs, variables) + interpreter(expression.rhs, variables);
 
-      if (expression.op === 'Sub') {
-        return interpreter(expression.lhs, variables) - interpreter(expression.rhs, variables);
-      }
+        case 'Sub':
+          return interpreter(expression.lhs, variables) - interpreter(expression.rhs, variables);
 
-      if (expression.op === 'Or') {
-        return interpreter(expression.lhs, variables) || interpreter(expression.rhs, variables);
-      }
+        case 'Or':
+          return interpreter(expression.lhs, variables) || interpreter(expression.rhs, variables);
 
-      if (expression.op === 'Lt') {
-        return interpreter(expression.lhs, variables) < interpreter(expression.rhs, variables);
-      }
+        case 'Lt':
+          return interpreter(expression.lhs, variables) < interpreter(expression.rhs, variables);
 
-      throw new Error(`unmapped operation ${expression}`);
+        default:
+          throw new Error(`unmapped operation ${expression}`);
+      }
 
     case 'If':
       return interpreter(
@@ -41,9 +49,12 @@ export const interpreter = (expression: Expression, variables = {}) => {
     case 'Function':
       return (...args) => {
         const localScope = { ...variables };
+        const { parameters } = expression;
 
-        for (let count = 0; count < expression.parameters.length; count += 1) {
-          localScope[expression.parameters[count].text] = args[count];
+        let count = 0;
+        while (count < parameters.length) {
+          localScope[parameters[count].text] = args[count];
+          count += 1;
         }
 
         return interpreter(expression.value, localScope);
@@ -64,13 +75,26 @@ export const interpreter = (expression: Expression, variables = {}) => {
       return variables[expression.text];
 
     case 'Call': {
-      const args = new Array(expression.arguments.length);
+      const args = [];
+      const size = expression.arguments.length;
 
-      for (let count = 0; count < expression.arguments.length; count += 1) {
+      let count = 0;
+      while (count < size) {
         args[count] = interpreter(expression.arguments[count], variables);
+        count += 1;
       }
 
-      return interpreter(expression.callee, variables)(...args);
+      // @ts-ignore
+      const cacheKey = generateCacheKey(expression.callee.text, args, variables);
+
+      const cacheResponse = cacheCalledFunctions[cacheKey];
+      if (cacheResponse) {
+        return cacheResponse;
+      }
+
+      const response = interpreter(expression.callee, variables)(...args);
+      cacheCalledFunctions[cacheKey] = response;
+      return response;
     }
     default:
       throw new Error(`unmapped instruction ${expression}`);

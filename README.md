@@ -21,6 +21,9 @@ docker build -t rinha .
 docker run rinha
 ```
 
+> docker build -t rinha . && docker run rinha
+
+
 
 ## Execução do interpretador via cli
 
