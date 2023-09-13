@@ -32,7 +32,7 @@ jobs:
         run: |
           PR_TITLE="${{ github.event.pull_request.title }}"
           PR_CONTENT="${PR_TITLE}: ${{ github.event.pull_request.body }}"
-          TAG_VERSION="${PR_TITLE}-v${{ env.VERSION }}"
+          TAG_VERSION="v${{ env.VERSION }}"
           echo "PR_CONTENT<<EOF" >> $GITHUB_ENV
           echo "$PR_CONTENT" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
@@ -43,7 +43,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.TAG_VERSION }}
+          tag_name: "${{ env.TAG_VERSION }}"
           release_name: Release ${{ env.TAG_VERSION }}
           body: |
             ${{ env.PR_CONTENT }}
