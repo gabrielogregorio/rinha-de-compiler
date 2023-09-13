@@ -1,0 +1,167 @@
+name: preview compiler
+
+on:
+  pull_request:
+    branch:
+      - main
+      - dev
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        pnpm-version: [8.3.1]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: checkout Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: checkout pnpm ${{ matrix.pnpm-version }}
+        uses: pnpm/action-setup@v2
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: find old bot comments
+        uses: peter-evans/find-comment@v2
+        id: find-old-bot-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: to preview branch
+
+      - name: check if bot comment exists
+        id: check-bot-comment
+        run: |
+          echo "::set-output name=comment-exists::${{ steps.find-old-bot-comment.outputs.comment-id != '' }}"
+
+      - name: create first bot comment if not exists
+        id: create-first-bot-comment
+        uses: peter-evans/create-or-update-comment@v3
+        if: steps.check-bot-comment.outputs.comment-exists == 'false'
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: 'Starting bot'
+
+      - name: get comment id, existing or new
+        id: get-new-or-old-comment-id
+        run: |
+          echo "::set-output name=comment-id::${{ steps.find-old-bot-comment.outputs.comment-id != '' && steps.find-old-bot-comment.outputs.comment-id || steps.create-first-bot-comment.outputs.comment-id }}"
+
+      - name: comment on pr, deploy to preview
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.get-new-or-old-comment-id.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ### Deploy to preview branch
+            ----------
+            This action deploys the current branch to github pages, returning the deploy URL to be tested.
+            > Even with the deployment finished, you will have to wait a little longer until github pages finish uploading the files
+          edit-mode: replace
+
+      - name: comment on PR, install packages
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.get-new-or-old-comment-id.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            - ⭐ Install packages...
+
+      - name: install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: comment on PR, building app
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.get-new-or-old-comment-id.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            - 🔨 Building app...
+
+      - name: set branch name and build directory
+        id: set_environments
+        run: |
+          BRANCH_NAME=${GITHUB_HEAD_REF##*/}
+          echo "Branch name: $BRANCH_NAME"
+          echo "Build directory: preview/$BRANCH_NAME"
+          echo "::set-output name=build_directory::preview/$BRANCH_NAME"
+          echo "::set-output name=branch_name::$BRANCH_NAME"
+
+      - name: get current version
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "::set-output name=version::$VERSION"
+
+      - name: build App
+        run: |
+          pnpm run build
+
+      - name: comment on PR, doing deploy
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.get-new-or-old-comment-id.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            - 🧑‍💻 Start deploy...
+
+      - name: deploy with gh-pages
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/gabrielogregorio/rinha-de-compiler.git
+
+          mkdir -p preview/${{ steps.set_environments.outputs.build_directory }}
+
+          echo "move dist to preview"
+          cp -r dist/* preview/${{ steps.set_environments.outputs.build_directory }}
+
+          echo "deploy do gh pages"
+          npx gh-pages -d preview --add -u "github-actions-bot <support+actions@github.com>"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get current time
+        id: currentTime
+        run: echo "::set-output name=current_time::$(date +'%d-%m-%Y-%H.%M:%S')"
+        shell: bash
+
+      - name: comment on PR
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment-id: ${{ steps.get-new-or-old-comment-id.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            - 🚀 The deploy will be done in https://gabrielogregorio.github.io/rinha-de-compiler/preview/${{ steps.set_environments.outputs.branch_name }}?nocache=${{ steps.currenttime.outputs.current_time }}
+          reactions: |
+            hooray
+            rocket
+
+  report-failure:
+    if: failure()
+    needs: [preview]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report failure
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: ❌ An error occurred during the preview execution. Please check the logs for details.

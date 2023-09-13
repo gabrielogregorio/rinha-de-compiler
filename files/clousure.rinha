@@ -1,0 +1,5 @@
+let m = 10;
+let test = fn (n) => {
+    n + m
+};
+print(test(2))
