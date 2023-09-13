@@ -1,5 +1,12 @@
 import { Expression } from './types';
 
+const generateCacheKey = (calleeText, args, variables) => {
+  const argsKey = JSON.stringify(args);
+  const varsKey = JSON.stringify(variables);
+
+  return `${calleeText}-${argsKey}-${varsKey}`;
+};
+
 const cacheCalledFunctions = {};
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -77,18 +84,16 @@ export const interpreter = (expression: Expression, variables = {}) => {
         count += 1;
       }
 
-      const argsKey = JSON.stringify(args);
-      const varsKey = JSON.stringify(variables);
-
       // @ts-ignore
-      const backupResponse = cacheCalledFunctions[`${expression.callee.text}-${argsKey}-${varsKey}`];
-      if (backupResponse) {
-        return backupResponse;
+      const cacheKey = generateCacheKey(expression.callee.text, args, variables);
+
+      const cacheResponse = cacheCalledFunctions[cacheKey];
+      if (cacheResponse) {
+        return cacheResponse;
       }
 
       const response = interpreter(expression.callee, variables)(...args);
-      // @ts-ignore
-      cacheCalledFunctions[`${expression.callee.text}-${argsKey}-${varsKey}`] = response;
+      cacheCalledFunctions[cacheKey] = response;
       return response;
     }
     default:
