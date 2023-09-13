@@ -91,7 +91,7 @@ const program = {
                 arguments: [
                     {
                         kind: 'Int',
-                        value: 10,
+                        value: 1000,
                     },
                 ],
             },
@@ -100,7 +100,7 @@ const program = {
 };
 describe('InterpreterFib', () => {
     it('should run fib() ast and returns 55', () => {
-        const EXPECTED_RESULT_FIB = 55;
+        const EXPECTED_RESULT_FIB = 4.346655768693743e208;
         expect((0, interpreter_1.interpreter)(program.expression)).toEqual(EXPECTED_RESULT_FIB);
     });
 });

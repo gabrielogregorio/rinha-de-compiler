@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.interpreter = void 0;
+const cacheCalledFunctions = {};
 const interpreter = (expression, variables = {}) => {
     switch (expression.kind) {
         case 'Print': {
@@ -53,7 +54,15 @@ const interpreter = (expression, variables = {}) => {
                 args[count] = (0, exports.interpreter)(expression.arguments[count], variables);
                 count += 1;
             }
-            return (0, exports.interpreter)(expression.callee, variables)(...args);
+            const argsKey = JSON.stringify(args);
+            const varsKey = JSON.stringify(variables);
+            const backupResponse = cacheCalledFunctions[`${expression.callee.text}-${argsKey}-${varsKey}`];
+            if (backupResponse) {
+                return backupResponse;
+            }
+            const response = (0, exports.interpreter)(expression.callee, variables)(...args);
+            cacheCalledFunctions[`${expression.callee.text}-${argsKey}-${varsKey}`] = response;
+            return response;
         }
         default:
             throw new Error(`unmapped instruction ${expression}`);
