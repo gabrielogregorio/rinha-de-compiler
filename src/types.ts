@@ -107,7 +107,7 @@ type ExpressionTuple = {
   location?: locationType;
 };
 
-type TermType =
+export type TermType =
   | ExpressionInt
   | ExpressionStr
   | ExpressionCall
@@ -119,10 +119,10 @@ type TermType =
   | ExpressionFirst
   | ExpressionSecond
   | ExpressionBool
-  | ExpressionTuple
   | ExpressionVar;
 
 export type Expression =
+  | ExpressionTuple
   | ExpressionLet
   | ExpressionIf
   | ExpressionFunction

@@ -1,4 +1,4 @@
-<!-- # Especificação
+# Especificação
 
 Essa é a especificação da arvore sintática abstrata. Uma árvore sintática abstrata é uma estrutura
 feita para ser lida por um computador que expressa um programa. Por exemplo, se você tem um programa que diz
@@ -58,41 +58,41 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 `Location` é uma estrutura que contém campos para localização de um pedaço da árvore dentro do código fonte
 
-| Nome     | Tipo   |
-| -------- | ------ |
-| start    | Int    |
-| end      | Int    |
-| filename | String |
+| Nome     | Tipo   |      |
+| -------- | ------ |------|
+| start    | Int    |  ✅  |
+| end      | Int    |  ✅  |
+| filename | String |  ✅  |
 
 ### Parameter
 
 `Parameter` representa o nome de uma parâmetro. É definida por:
 
-| Nome     | Tipo                  |
-| -------- | --------------------- |
-| text     | String                |
-| location | [Location](#location) |
+| Nome     | Tipo                  |      |
+| -------- | --------------------- |------|
+| text     | String                |  ✅  |
+| location | [Location](#location) |  ✅  |
 
 ### Var (Nome de uma variável)
 
 `Var` representa o nome de uma variável. É definida por:
 
-| Nome     | Tipo                  |
-| -------- | --------------------- |
-| kind     | String                |
-| text     | String                |
-| location | [Location](#location) |
+| Nome     | Tipo                  |      |
+| -------- | --------------------- |------|
+| kind     | String                |  ✅  |
+| text     | String                |  ✅  |
+| location | [Location](#location) |  ✅  |
 
 ### Function (Função anônima)
 
 `Function` é a criação de uma função anônima que pode capturar o ambiente, ela é representada por:
 
-| Nome       | Tipo                      |
-| ---------- | ------------------------- |
-| kind       | String                    |
-| parameters | [[Parameter](#parameter)] |
-| value      | Term                      |
-| location   | [Location](#location)     |
+| Nome       | Tipo                      |      |
+| ---------- | ------------------------- |------|
+| kind       | String                    |  ✅  |
+| parameters | [[Parameter](#parameter)] |  ✅  |
+| value      | Term                      |  ✅  |
+| location   | [Location](#location)     |  ✅  |
 
 Toda função quando chamada deve dar erro caso o número de parâmetros seja diferente do número de argumentos.
 
@@ -100,12 +100,12 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 `Call` é uma aplicação de funçao entre um termo e varios outros termos chamados de argumentos. Essa estrutura é representada por:
 
-| Nome      | Tipo                  |
-| --------- | --------------------- |
-| kind      | String                |
-| callee    | Term                  |
-| arguments | [Term]                |
-| location  | [Location](#location) |
+| Nome      | Tipo                  |      |
+| --------- | --------------------- |------|
+| kind      | String                |  ✅  |
+| callee    | Term                  |  ✅  |
+| arguments | [Term]                |  ✅  |
+| location  | [Location](#location) |  ✅  |
 
 ### Let
 
@@ -125,21 +125,21 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 `Str` é uma estrutura que representa um literal de texto. Ela é representada por:
 
-| Nome     | Tipo                  |
-| -------- | --------------------- |
-| kind     | String                |
-| value    | String                |
-| location | [Location](#location) |
+| Nome     | Tipo                  |status|
+| -------- | --------------------- |------|
+| kind     | String                |  ✅  |
+| value    | String                |  ✅  |
+| location | [Location](#location) |  ✅  |
 
 ### Int (Inteiro)
 
 `Int` é uma estrutura que representa um literal de número inteiro signed que tem tamanho de 32 bits, ou seja um Int32. Ela é representada por:
 
-| Nome     | Tipo                  |
-| -------- | --------------------- |
-| kind     | String                |
-| value    | Number                |
-| location | [Location](#location) |
+| Nome     | Tipo                  |status|
+| -------- | --------------------- |------|
+| kind     | String                |  ✅  |
+| value    | Number                |  ✅  |
+| location | [Location](#location) |  ✅  |
 
 ### BinaryOp (Operador Binário)
 
@@ -167,11 +167,11 @@ Overflow não será testado.
 
 `Bool` é uma estrutura que representa um literal de boolean. Ela é representada por:
 
-| Nome     | Tipo                  |
-| -------- | --------------------- |
-| kind     | String                |
-| value    | Bool                  |
-| location | [Location](#location) |
+| Nome     | Tipo                  |      |
+| -------- | --------------------- |------|
+| kind     | String                |  ✅  |
+| value    | Bool                  |  ✅  |
+| location | [Location](#location) |  ✅  |
 
 ### If
 
@@ -205,9 +205,9 @@ if (true) {
 | lhs      | Term                                   |
 | op       | [BinaryOp](#binaryop-operador-binário) |
 | rhs      | Term                                   |
-| location | [Location](#location)                  | -->
+| location | [Location](#location)                  |
 
-<!-- ### Tuple (Criação de uma 2-Tuple)
+### Tuple (Criação de uma 2-Tuple)
 
 `Tuple` é um elemento que descreve a criação de uma tupla com a sintaxe:
 
@@ -254,36 +254,33 @@ second((1, 2))
 | value    | Term                  |
 | location | [Location](#location) |
 
-Quando o second for chamado com algo que não é uma tupla ele deve dar um erro de runtime. -->
+Quando o second for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
 
-
-
-// needs test tuple and advanced print
 ### Print (Função de printar para o standard output)
 
 `Print` é a chamada da função de printar para o standard output. Ela é definida por:
 
 Exemplos que devem ser válidos: `print(a)`, `print("a")`, `print(2)`, `print(true)`, `print((1, 2))`
 
-| Nome     | Tipo                  |
-| -------- | --------------------- |
-| kind     | String                |
-| value    | Term                  |
-| location | [Location](#location) |
+| Nome     | Tipo                  |status|
+| -------- | --------------------- |------|
+| kind     | String                |  ✅  |
+| value    | Term                  |  ✅  |
+| location | [Location](#location) |  ✅  |
 
 Os valores devem ser impressos como:
 
-| Tipo    | Como deve ser printado           |
-| ------- | -------------------------------- |
-| String  | a string sem aspas duplas ex `a` |
-| Number  | o literal de número ex `0`       |
-| Boolean | `true` ou `false`                |
-| Closure | `<#closure>`                     |
-| Tuple   | `(term, term)`                   |
+| Tipo    | Como deve ser printado           |status|
+| ------- | -------------------------------- |------|
+| String  | a string sem aspas duplas ex `a` |  ✅  |
+| Number  | o literal de número ex `0`       |  ✅  |
+| Boolean | `true` ou `false`                |  ✅  |
+| Closure | `<#closure>`                     |  ✅  |
+| Tuple   | `(term, term)`                   |  ✅  |
 
 ### Term
 
-Um termo pode ser qualquer uma das seguintes estruturas: -->
+Um termo pode ser qualquer uma das seguintes estruturas:
 
 - Int
 - Str
