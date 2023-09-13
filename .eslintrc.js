@@ -51,7 +51,6 @@ module.exports = {
     'no-unreachable': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-redeclare': 'error',
-    '@typescript-eslint/no-implicit-any-catch': 'error',
     'id-length': [2, { min: 3, properties: 'never' }],
     '@typescript-eslint/no-duplicate-enum-values': 'error',
     '@typescript-eslint/no-dynamic-delete': 'error',
