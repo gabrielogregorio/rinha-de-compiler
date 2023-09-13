@@ -1,5 +1,11 @@
 # Rinha de compiladores - Interpretador
 
+[Repositório para quem quiser participar](https://github.com/aripiprazole/rinha-de-compiler)
+
+Este é um interpretador que recebe uma AST conforme especificação do [rinha](https://github.com/aripiprazole/rinha-de-compiler) e interpreta as instruções.
+
+O projeto é baseado em node 20 e typescript e ainda está em desenvolvimento.
+
 ## Execução para o rinha
 
 Clone o repositório
@@ -15,7 +21,6 @@ docker build -t rinha .
 docker run rinha
 ```
 
-## Extras
 
 ## Execução do interpretador via cli
 
@@ -27,12 +32,11 @@ docker run rinha
 
 ## Decisões
 - Foi priorizado o uso de switch pelo desempenho, em testes, usando o if tinhamos 1s, e o switch 0.68s
-- Switch em alguns casos não teve melhora significativa
-- Node js 20 se mostrou muito mais eficiente do que node 16
-- Ao usar o babel para compilar, o tempo de execução em alguns casos foi de 1.5s para 10s. Usar o typescript puro temos o tempo de 1.5s para os mesmos casos
-
-## Decisões Extras
-- Bun foi mais rápido do que nodejs
+- Switch em alguns casos não teve melhora significativa, por isso ainda temos ifs espalhados por ai.
+- Node js 20 se mostrou muito mais eficiente do que node 16, coisas de 2s foram para 1.6s
+- Bun foi mais rápido do que nodejs, indo para 1.4s mas por enquanto ainda sigo no nodejs, para aprender melhor sobre o node antes que o bun o substitua de vez haha
+- Ao usar o babel para compilar, o tempo de execução em alguns casos foi de 1.5s para 10s. Usar o typescript puro temos o tempo de 1.5s para os mesmos casos.
+- Decidi não dividir o interpretador em funções a parte, já que começei a lidar com algumas questões chatinhas como uma função sendo chamada antes dela ter sido declarada (ta o js permite isso, mas é feio, estranho, sugeito a bugs e enfim, to tentando evitar.), e outros pontos que são feios e estranhos, e por isso preferi manter tudo junto.
 
 ## Extras
 
