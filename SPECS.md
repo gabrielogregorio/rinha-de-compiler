@@ -127,9 +127,9 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 | Nome     | Tipo                  |status|
 | -------- | --------------------- |------|
-| kind     | String                |  [❌](#Str#)  |
-| value    | String                |  [❌](#Str#)  |
-| location | [Location](#location) |  [❌](#Str#)  |
+| kind     | String                |  [✅](#Str#)  |
+| value    | String                |  [✅](#Str#)  |
+| location | [Location](#location) |  [✅](#Str#)  |
 
 ### Int (Inteiro)
 
