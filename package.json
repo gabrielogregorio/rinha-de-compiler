@@ -12,14 +12,15 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc && tsc-alias",
-    "jest": "jest  --passWithNoTests",
+    "jest": "jest --passWithNoTests && npm run update:marks",
+    "update:marks": "mark-tested-specs -d ./src/ -s ./SPECS.md",
     "audit": "npm audit",
     "jest:coverage": "jest --coverage",
     "prepare": "husky install",
     "check": "tsc --noEmit",
     "lint": "eslint -c ./.eslintrc.js --ext '.ts' 'src/**'",
     "format": "prettier src/* --write",
-    "b":"yarn build"
+    "b": "yarn build"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
@@ -51,5 +52,8 @@
     "tsc-alias": "^1.8.7",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "mark-tested-specs": "^1.1.1"
   }
 }

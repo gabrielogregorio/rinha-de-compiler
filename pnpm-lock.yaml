@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+dependencies:
+  mark-tested-specs:
+    specifier: ^1.1.1
+    version: 1.1.1
+
 devDependencies:
   '@commitlint/cli':
     specifier: ^17.7.1
@@ -4122,6 +4127,12 @@ packages:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
     engines: {node: '>=8'}
     dev: true
+
+  /mark-tested-specs@1.1.1:
+    resolution: {integrity: sha512-f6cnjuf1PWplS+PM11DoG9FaslPe9vwrDgSDMZfTUl4YzURVR3VbfaEsTJmInqKAg9lbBiq4SOBhoSTvot3q8g==}
+    engines: {node: '>=8', npm: '>=5'}
+    hasBin: true
+    dev: false
 
   /meow@8.1.2:
     resolution: {integrity: sha512-r85E3NdZ+mpYk1C6RjPFEMSE+s1iZMuHtsHAqY0DT3jZczl0diWUZ8g6oU7h0M9cD2EL+PzaYghhCLzR0ZNn5Q==}
