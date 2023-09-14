@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  mark-tested-specs:
-    specifier: ^1.1.1
-    version: 1.1.1
-
 devDependencies:
   '@commitlint/cli':
     specifier: ^17.7.1
@@ -79,6 +74,9 @@ devDependencies:
   lint-staged:
     specifier: ^14.0.1
     version: 14.0.1
+  mark-tested-specs:
+    specifier: ^1.2.0
+    version: 1.2.0
   prettier:
     specifier: ^3.0.3
     version: 3.0.3
@@ -4128,11 +4126,11 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /mark-tested-specs@1.1.1:
-    resolution: {integrity: sha512-f6cnjuf1PWplS+PM11DoG9FaslPe9vwrDgSDMZfTUl4YzURVR3VbfaEsTJmInqKAg9lbBiq4SOBhoSTvot3q8g==}
+  /mark-tested-specs@1.2.0:
+    resolution: {integrity: sha512-WvUB9Det89zMUTrRvI/LdCdkCcFSjNJawdf8bEPCOufhSjz0iHUASYIfirChuEdKIPgViQ/u65CYGSEegrSwOQ==}
     engines: {node: '>=8', npm: '>=5'}
     hasBin: true
-    dev: false
+    dev: true
 
   /meow@8.1.2:
     resolution: {integrity: sha512-r85E3NdZ+mpYk1C6RjPFEMSE+s1iZMuHtsHAqY0DT3jZczl0diWUZ8g6oU7h0M9cD2EL+PzaYghhCLzR0ZNn5Q==}

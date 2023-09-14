@@ -60,9 +60,9 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome     | Tipo   |      |
 | -------- | ------ |------|
-| start    | Int    |  [](#Location#)  |
-| end      | Int    |  [](#Location#)  |
-| filename | String |  [](#Location#)  |
+| start    | Int    |  [❌](#Location#)  |
+| end      | Int    |  [❌](#Location#)  |
+| filename | String |  [❌](#Location#)  |
 
 ### Parameter
 
@@ -70,8 +70,8 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome     | Tipo                  |      |
 | -------- | --------------------- |------|
-| text     | String                |  [](#Parameter#)  |
-| location | [Location](#location) |  [](#Parameter#)  |
+| text     | String                |  [❌](#Parameter#)  |
+| location | [Location](#location) |  [❌](#Parameter#)  |
 
 ### Var (Nome de uma variável)
 
@@ -79,9 +79,9 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome     | Tipo                  |      |
 | -------- | --------------------- |------|
-| kind     | String                |  [](#Var#)  |
-| text     | String                |  [](#Var#)  |
-| location | [Location](#location) |  [](#Var#)  |
+| kind     | String                |  [❌](#Var#)  |
+| text     | String                |  [❌](#Var#)  |
+| location | [Location](#location) |  [❌](#Var#)  |
 
 ### Function (Função anônima)
 
@@ -89,10 +89,10 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome       | Tipo                      |      |
 | ---------- | ------------------------- |------|
-| kind       | String                    |  [](#Function#)  |
-| parameters | [[Parameter](#parameter)] |  [](#Function#)  |
-| value      | Term                      |  [](#Function#)  |
-| location   | [Location](#location)     |  [](#Function#)  |
+| kind       | String                    |  [❌](#Function#)  |
+| parameters | [[Parameter](#parameter)] |  [❌](#Function#)  |
+| value      | Term                      |  [❌](#Function#)  |
+| location   | [Location](#location)     |  [❌](#Function#)  |
 
 Toda função quando chamada deve dar erro caso o número de parâmetros seja diferente do número de argumentos.
 
@@ -102,10 +102,10 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 | Nome      | Tipo                  |      |
 | --------- | --------------------- |------|
-| kind      | String                |  [](#Call#)  |
-| callee    | Term                  |  [](#Call#)  |
-| arguments | [Term]                |  [](#Call#)  |
-| location  | [Location](#location) |  [](#Call#)  |
+| kind      | String                |  [❌](#Call#)  |
+| callee    | Term                  |  [❌](#Call#)  |
+| arguments | [Term]                |  [❌](#Call#)  |
+| location  | [Location](#location) |  [❌](#Call#)  |
 
 ### Let
 
@@ -113,11 +113,11 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 | Nome     | Tipo                    | Status    |
 | -------- | ----------------------- |-----------|
-| kind     | String                  | [](#Let#) |
-| name     | [Parameter](#parameter) | [](#Let#) |
-| value    | Term                    | [](#Let#) |
-| next     | Term                    | [](#Let#) |
-| location | [Location](#location)   | [](#Let#) |
+| kind     | String                  | [❌](#Let#) |
+| name     | [Parameter](#parameter) | [❌](#Let#) |
+| value    | Term                    | [❌](#Let#) |
+| next     | Term                    | [❌](#Let#) |
+| location | [Location](#location)   | [❌](#Let#) |
 
 É permitido usar hoisting como forma de possibilitar a criação de funções recursivas.
 
@@ -127,9 +127,9 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 | Nome     | Tipo                  |status|
 | -------- | --------------------- |------|
-| kind     | String                |  [](#Str)  |
-| value    | String                |  [](#Str)  |
-| location | [Location](#location) |  [](#Str)  |
+| kind     | String                |  [❌](#Str#)  |
+| value    | String                |  [❌](#Str#)  |
+| location | [Location](#location) |  [❌](#Str#)  |
 
 ### Int (Inteiro)
 
@@ -137,9 +137,9 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 | Nome     | Tipo                  |status|
 | -------- | --------------------- |------|
-| kind     | String                |  [](#Int)  |
-| value    | Number                |  [](#Int)  |
-| location | [Location](#location) |  [](#Int)  |
+| kind     | String                |  [❌](#Int#)  |
+| value    | Number                |  [❌](#Int#)  |
+| location | [Location](#location) |  [❌](#Int#)  |
 
 ### BinaryOp (Operador Binário)
 
@@ -147,19 +147,19 @@ Um `BinaryOp` é um enumerador que representa uma operação binária. Essas sã
 
 | Nome | Descrição        | Exemplos que devem ser válidos                                      |           |
 | ---- | ---------------- | ------------------------------------------------------------------- |-----------|
-| Add  | Soma             | `3 + 5 = 8`, `"a" + 2 = "a2"`, `2 + "a" = "2a"`, `"a" + "b" = "ab"` | [](#Add#) |
-| Sub  | Subtração        | `0 - 1 = -1`                                                        | [](#Sub#) |
-| Mul  | Multiplicação    | `2 * 2 = 4`                                                         | [](#Mul#) |
-| Div  | Divisão          | `3 / 2 = 1`                                                         | [](#Div#) |
-| Rem  | Resto da divisão | `4 % 2 = 0`                                                         | [](#Rem#) |
-| Eq   | Igualdade        | `"a" == "a"`, `2 == 1 + 1`, `true == true`                          | [](#Eq#)  |
-| Neq  | Diferente        | `"a" != "b"`, `3 != 1 + 1`, `true != false`                         | [](#Neq#) |
-| Lt   | Menor            | `1 < 2`                                                             | [](#Lt#)  |
-| Gt   | Maior            | `2 > 3`                                                             | [](#Gt#)  |
-| Lte  | Menor ou igual   | `1 <= 2`                                                            | [](#Lte#) |
-| Gte  | Maior ou igual   | `1 >= 2`                                                            | [](#Gte#) |
-| And  | Conjunção        | `true && false`                                                     | [](#And#) |
-| Or   | Disjunção        | `false \|\| true`                                                   | [](#Or#)  |
+| Add  | Soma             | `3 + 5 = 8`, `"a" + 2 = "a2"`, `2 + "a" = "2a"`, `"a" + "b" = "ab"` | [❌](#Add#) |
+| Sub  | Subtração        | `0 - 1 = -1`                                                        | [❌](#Sub#) |
+| Mul  | Multiplicação    | `2 * 2 = 4`                                                         | [❌](#Mul#) |
+| Div  | Divisão          | `3 / 2 = 1`                                                         | [❌](#Div#) |
+| Rem  | Resto da divisão | `4 % 2 = 0`                                                         | [❌](#Rem#) |
+| Eq   | Igualdade        | `"a" == "a"`, `2 == 1 + 1`, `true == true`                          | [❌](#Eq#)  |
+| Neq  | Diferente        | `"a" != "b"`, `3 != 1 + 1`, `true != false`                         | [❌](#Neq#) |
+| Lt   | Menor            | `1 < 2`                                                             | [❌](#Lt#)  |
+| Gt   | Maior            | `2 > 3`                                                             | [❌](#Gt#)  |
+| Lte  | Menor ou igual   | `1 <= 2`                                                            | [❌](#Lte#) |
+| Gte  | Maior ou igual   | `1 >= 2`                                                            | [❌](#Gte#) |
+| And  | Conjunção        | `true && false`                                                     | [❌](#And#) |
+| Or   | Disjunção        | `false \|\| true`                                                   | [❌](#Or#)  |
 
 Overflow não será testado.
 
@@ -169,9 +169,9 @@ Overflow não será testado.
 
 | Nome     | Tipo                  |      |
 | -------- | --------------------- |------|
-| kind     | String                |  [](#Bool#)  |
-| value    | Bool                  |  [](#Bool#)  |
-| location | [Location](#location) |  [](#Bool#)  |
+| kind     | String                |  [❌](#Bool#)  |
+| value    | Bool                  |  [❌](#Bool#)  |
+| location | [Location](#location) |  [❌](#Bool#)  |
 
 ### If
 
@@ -189,11 +189,11 @@ if (true) {
 
 | Nome      | Tipo                  |         |
 | --------- | --------------------- |---------|
-| kind      | String                | [](#If#)|
-| condition | Term                  | [](#If#)|
-| then      | Term                  | [](#If#)|
-| otherwise | Term                  | [](#If#)|
-| location  | [Location](#location) | [](#If#)|
+| kind      | String                | [❌](#If#)|
+| condition | Term                  | [❌](#If#)|
+| then      | Term                  | [❌](#If#)|
+| otherwise | Term                  | [❌](#If#)|
+| location  | [Location](#location) | [❌](#If#)|
 
 ### Binary (Operação Binária)
 
@@ -202,11 +202,11 @@ if (true) {
 
 | Nome     | Tipo                                   |         |
 | -------- | -------------------------------------- |---------|
-| kind     | String                                 | [](#Binary#) |
-| lhs      | Term                                   | [](#Binary#) |
-| op       | [BinaryOp](#binaryop-operador-binário) | [](#Binary#) |
-| rhs      | Term                                   | [](#Binary#) |
-| location | [Location](#location)                  | [](#Binary#) |
+| kind     | String                                 | [❌](#Binary#) |
+| lhs      | Term                                   | [❌](#Binary#) |
+| op       | [BinaryOp](#binaryop-operador-binário) | [❌](#Binary#) |
+| rhs      | Term                                   | [❌](#Binary#) |
+| location | [Location](#location)                  | [❌](#Binary#) |
 
 ### Tuple (Criação de uma 2-Tuple)
 
@@ -220,10 +220,10 @@ Ela tem os seguintes elementos:
 
 | Nome     | Tipo                  |         |
 | -------- | --------------------- |---------|
-| kind     | String                | [](#Tuple#) |
-| first    | Term                  | [](#Tuple#) |
-| second   | Term                  | [](#Tuple#) |
-| location | [Location](#location) | [](#Tuple#) |
+| kind     | String                | [❌](#Tuple#) |
+| first    | Term                  | [❌](#Tuple#) |
+| second   | Term                  | [❌](#Tuple#) |
+| location | [Location](#location) | [❌](#Tuple#) |
 
 ### First (Função de pegar o primeiro elemento de uma tupla)
 
@@ -235,9 +235,9 @@ first((1, 2))
 
 | Nome     | Tipo                  |          |
 | -------- | --------------------- |----------|
-| kind     | String                | [](#First#) |
-| value    | Term                  | [](#First#) |
-| location | [Location](#location) | [](#First#) |
+| kind     | String                | [❌](#First#) |
+| value    | Term                  | [❌](#First#) |
+| location | [Location](#location) | [❌](#First#) |
 
 Quando o first for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
 
@@ -251,9 +251,9 @@ second((1, 2))
 
 | Nome     | Tipo                  |              |
 | -------- | --------------------- |-------------|
-| kind     | String                | [](#Second#) |
-| value    | Term                  | [](#Second#) |
-| location | [Location](#location) | [](#Second#) |
+| kind     | String                | [❌](#Second#) |
+| value    | Term                  | [❌](#Second#) |
+| location | [Location](#location) | [❌](#Second#) |
 
 Quando o second for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
 
@@ -265,21 +265,21 @@ Exemplos que devem ser válidos: `print(a)`, `print("a")`, `print(2)`, `print(tr
 
 | Nome     | Tipo                  |status|
 | -------- | --------------------- |------|
-| kind     | String                |  [](#Print#)  |
-| value    | Term                  |  [](#Print#)  |
-| location | [Location](#location) |  [](#Print#)  |
+| kind     | String                |  [❌](#Print#)  |
+| value    | Term                  |  [❌](#Print#)  |
+| location | [Location](#location) |  [❌](#Print#)  |
 
 Os valores devem ser impressos como:
 
 | Tipo    | Como deve ser printado           |status|
 | ------- | -------------------------------- |------|
-| String  | a string sem aspas duplas ex `a` |  [](#PrintString#)  |
-| Number  | o literal de número ex `0`       |  [](#PrintNumber#)  |
-| Boolean | `true` ou `false`                |  [](#PrintBoolean#)  |
-| Closure | `<#closure>`                     |  [](#PrintClosure#)  |
-| Tuple   | `(term, term)`                   |  [](#PrintTuple#)  |
+| String  | a string sem aspas duplas ex `a` |  [❌](#PrintString#)  |
+| Number  | o literal de número ex `0`       |  [❌](#PrintNumber#)  |
+| Boolean | `true` ou `false`                |  [❌](#PrintBoolean#)  |
+| Closure | `<#closure>`                     |  [❌](#PrintClosure#)  |
+| Tuple   | `(term, term)`                   |  [❌](#PrintTuple#)  |
 
-### Term [](#Term#)
+### Term [❌](#Term#)
 
 Um termo pode ser qualquer uma das seguintes estruturas:
 
