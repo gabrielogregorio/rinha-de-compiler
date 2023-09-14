@@ -48,11 +48,11 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 `File` é uma estrutura que tem dados do arquivo inteiro e que contém os seguintes campos:
 
-| Nome       | Tipo                  |
-| ---------- | --------------------- |
-| name       | String                |
-| expression | Term                  |
-| location   | [Location](#location) |
+| Nome       | Tipo                  |               |
+| ---------- | --------------------- |---------------|
+| name       | String                | [❌](#File#)    |
+| expression | Term                  | [❌](#File#)    |
+| location   | [Location](#location) | [❌](#File#)    |
 
 ### Location
 
