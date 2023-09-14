@@ -169,9 +169,9 @@ Overflow não será testado.
 
 | Nome     | Tipo                  |      |
 | -------- | --------------------- |------|
-| kind     | String                |  [❌](#Bool#)  |
-| value    | Bool                  |  [❌](#Bool#)  |
-| location | [Location](#location) |  [❌](#Bool#)  |
+| kind     | String                |  [✅](#Bool#)  |
+| value    | Bool                  |  [✅](#Bool#)  |
+| location | [Location](#location) |  [✅](#Bool#)  |
 
 ### If
 
