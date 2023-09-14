@@ -49,7 +49,7 @@ type ExpressionCall = {
 
 type Operators = 'Add' | 'Sub' | 'Mul' | 'Div' | 'Rem' | 'Eq' | 'Neq' | 'Lt' | 'Gt' | 'Lte' | 'Gte' | 'And' | 'Or';
 
-type ExpressionBinary = {
+export type ExpressionBinary = {
   kind: 'Binary';
   lhs: Expression;
   op: Operators;

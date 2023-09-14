@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { interpreter } from './interpreter';
 
-describe('test Other', () => {
+describe('test #Int#', () => {
   it('should run Int ast and returns 10', () => {
     expect(
       interpreter({

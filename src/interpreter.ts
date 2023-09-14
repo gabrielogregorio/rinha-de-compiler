@@ -37,6 +37,12 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
         case 'Add':
           return interpreter(expression.lhs, variables) + interpreter(expression.rhs, variables);
 
+        case 'Mul':
+          return interpreter(expression.lhs, variables) * interpreter(expression.rhs, variables);
+
+        case 'Div':
+          return interpreter(expression.lhs, variables) / interpreter(expression.rhs, variables);
+
         case 'Sub':
           return interpreter(expression.lhs, variables) - interpreter(expression.rhs, variables);
 
@@ -45,6 +51,9 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
 
         case 'Lt':
           return interpreter(expression.lhs, variables) < interpreter(expression.rhs, variables);
+
+        case 'Rem':
+          return interpreter(expression.lhs, variables) % interpreter(expression.rhs, variables);
 
         default:
           throw new Error(`unmapped operation ${expression}`);
