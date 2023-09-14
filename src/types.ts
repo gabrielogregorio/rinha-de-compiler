@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 
+// test #Location#
 type locationType = {
   start: number;
   end: number;
@@ -82,6 +83,7 @@ type ExpressionLet = {
   location?: locationType;
 };
 
+// test #File#
 export type ExpressionBase = {
   name?: string;
   expression: Expression;

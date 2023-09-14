@@ -50,9 +50,9 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome       | Tipo                  |               |
 | ---------- | --------------------- |---------------|
-| name       | String                | [❌](#File#)    |
-| expression | Term                  | [❌](#File#)    |
-| location   | [Location](#location) | [❌](#File#)    |
+| name       | String                | [✅](#File#)    |
+| expression | Term                  | [✅](#File#)    |
+| location   | [Location](#location) | [✅](#File#)    |
 
 ### Location
 
@@ -60,9 +60,9 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome     | Tipo   |      |
 | -------- | ------ |------|
-| start    | Int    |  [❌](#Location#)  |
-| end      | Int    |  [❌](#Location#)  |
-| filename | String |  [❌](#Location#)  |
+| start    | Int    |  [✅](#Location#)  |
+| end      | Int    |  [✅](#Location#)  |
+| filename | String |  [✅](#Location#)  |
 
 ### Parameter
 
