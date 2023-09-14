@@ -107,19 +107,20 @@ type ExpressionTuple = {
   location?: locationType;
 };
 
-export type TermType =
-  | ExpressionInt
-  | ExpressionStr
-  | ExpressionCall
-  | ExpressionBinary
-  | ExpressionFunction
-  | ExpressionLet
-  | ExpressionIf
-  | ExpressionPrint
-  | ExpressionFirst
-  | ExpressionSecond
-  | ExpressionBool
-  | ExpressionVar;
+export type TermType = // test #TermType#
+
+    | ExpressionInt
+    | ExpressionStr
+    | ExpressionCall
+    | ExpressionBinary
+    | ExpressionFunction
+    | ExpressionLet
+    | ExpressionIf
+    | ExpressionPrint
+    | ExpressionFirst
+    | ExpressionSecond
+    | ExpressionBool
+    | ExpressionVar;
 
 export type Expression =
   | ExpressionTuple

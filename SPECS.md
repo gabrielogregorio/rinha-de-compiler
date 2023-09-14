@@ -273,13 +273,13 @@ Os valores devem ser impressos como:
 
 | Tipo    | Como deve ser printado           |status|
 | ------- | -------------------------------- |------|
-| String  | a string sem aspas duplas ex `a` |  [❌](#PrintString#)  |
-| Number  | o literal de número ex `0`       |  [❌](#PrintNumber#)  |
-| Boolean | `true` ou `false`                |  [❌](#PrintBoolean#)  |
-| Closure | `<#closure>`                     |  [❌](#PrintClosure#)  |
-| Tuple   | `(term, term)`                   |  [❌](#PrintTuple#)  |
+| String  | a string sem aspas duplas ex `a` |  [✅](#PrintString#)  |
+| Number  | o literal de número ex `0`       |  [✅](#PrintNumber#)  |
+| Boolean | `true` ou `false`                |  [✅](#PrintBoolean#)  |
+| Closure | `<#closure>`                     |  [✅](#PrintClosure#)  |
+| Tuple   | `(term, term)`                   |  [✅](#PrintTuple#)  |
 
-### Term [❌](#Term#)
+### Term [✅](#TermType#)
 
 Um termo pode ser qualquer uma das seguintes estruturas:
 
