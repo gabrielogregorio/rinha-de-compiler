@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { interpreter } from './interpreter';
 
-describe('InterpreterPrint', () => {
+describe('InterpreterPrint test #Print#', () => {
   it('should run print() ast and returns "Hello world" without" test #PrintString#', () => {
     expect(
       interpreter({

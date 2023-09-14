@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 
+// test #Location#
 type locationType = {
   start: number;
   end: number;
@@ -49,7 +50,7 @@ type ExpressionCall = {
 
 type Operators = 'Add' | 'Sub' | 'Mul' | 'Div' | 'Rem' | 'Eq' | 'Neq' | 'Lt' | 'Gt' | 'Lte' | 'Gte' | 'And' | 'Or';
 
-type ExpressionBinary = {
+export type ExpressionBinary = {
   kind: 'Binary';
   lhs: Expression;
   op: Operators;
@@ -82,6 +83,7 @@ type ExpressionLet = {
   location?: locationType;
 };
 
+// test #File#
 export type ExpressionBase = {
   name?: string;
   expression: Expression;

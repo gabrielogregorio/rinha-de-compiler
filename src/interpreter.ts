@@ -31,20 +31,47 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
     case 'Binary':
       // eslint-disable-next-line sonarjs/no-nested-switch
       switch (expression.op) {
+        case 'And':
+          return interpreter(expression.lhs, variables) && interpreter(expression.rhs, variables);
+
+        case 'Or':
+          return interpreter(expression.lhs, variables) || interpreter(expression.rhs, variables);
+
         case 'Eq':
           return interpreter(expression.lhs, variables) === interpreter(expression.rhs, variables);
 
         case 'Add':
           return interpreter(expression.lhs, variables) + interpreter(expression.rhs, variables);
 
+        case 'Mul':
+          return interpreter(expression.lhs, variables) * interpreter(expression.rhs, variables);
+
+        case 'Div':
+          if (expression.lhs.kind === 'Int' && expression.rhs.kind === 'Int') {
+            return Math.floor(interpreter(expression.lhs, variables) / interpreter(expression.rhs, variables));
+          }
+          return interpreter(expression.lhs, variables) / interpreter(expression.rhs, variables);
+
         case 'Sub':
           return interpreter(expression.lhs, variables) - interpreter(expression.rhs, variables);
 
-        case 'Or':
-          return interpreter(expression.lhs, variables) || interpreter(expression.rhs, variables);
+        case 'Neq':
+          return interpreter(expression.lhs, variables) !== interpreter(expression.rhs, variables);
 
         case 'Lt':
           return interpreter(expression.lhs, variables) < interpreter(expression.rhs, variables);
+
+        case 'Lte':
+          return interpreter(expression.lhs, variables) <= interpreter(expression.rhs, variables);
+
+        case 'Gt':
+          return interpreter(expression.lhs, variables) > interpreter(expression.rhs, variables);
+
+        case 'Gte':
+          return interpreter(expression.lhs, variables) >= interpreter(expression.rhs, variables);
+
+        case 'Rem':
+          return interpreter(expression.lhs, variables) % interpreter(expression.rhs, variables);
 
         default:
           throw new Error(`unmapped operation ${expression}`);
@@ -80,6 +107,10 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
       return interpreter(expression.next, variables);
 
     case 'Int':
+      if (!Number.isInteger(expression.value)) {
+        throw new Error('number is not integer');
+      }
+      return expression.value;
     case 'Str':
     case 'Bool':
       return expression.value;
