@@ -41,6 +41,9 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
           return interpreter(expression.lhs, variables) * interpreter(expression.rhs, variables);
 
         case 'Div':
+          if (expression.lhs.kind === 'Int' && expression.rhs.kind === 'Int') {
+            return Math.floor(interpreter(expression.lhs, variables) / interpreter(expression.rhs, variables));
+          }
           return interpreter(expression.lhs, variables) / interpreter(expression.rhs, variables);
 
         case 'Sub':
@@ -89,6 +92,10 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
       return interpreter(expression.next, variables);
 
     case 'Int':
+      if (!Number.isInteger(expression.value)) {
+        throw new Error('number is not integer');
+      }
+      return expression.value;
     case 'Str':
     case 'Bool':
       return expression.value;

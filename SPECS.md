@@ -137,9 +137,9 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 | Nome     | Tipo                  |status|
 | -------- | --------------------- |------|
-| kind     | String                |  [❌](#Int#)  |
-| value    | Number                |  [❌](#Int#)  |
-| location | [Location](#location) |  [❌](#Int#)  |
+| kind     | String                |  [✅](#Int#)  |
+| value    | Number                |  [✅](#Int#)  |
+| location | [Location](#location) |  [✅](#Int#)  |
 
 ### BinaryOp (Operador Binário)
 
@@ -147,11 +147,11 @@ Um `BinaryOp` é um enumerador que representa uma operação binária. Essas sã
 
 | Nome | Descrição        | Exemplos que devem ser válidos                                      |           |
 | ---- | ---------------- | ------------------------------------------------------------------- |-----------|
-| Add  | Soma             | `3 + 5 = 8`, `"a" + 2 = "a2"`, `2 + "a" = "2a"`, `"a" + "b" = "ab"` | [❌](#Add#) |
-| Sub  | Subtração        | `0 - 1 = -1`                                                        | [❌](#Sub#) |
-| Mul  | Multiplicação    | `2 * 2 = 4`                                                         | [❌](#Mul#) |
-| Div  | Divisão          | `3 / 2 = 1`                                                         | [❌](#Div#) |
-| Rem  | Resto da divisão | `4 % 2 = 0`                                                         | [❌](#Rem#) |
+| Add  | Soma             | `3 + 5 = 8`, `"a" + 2 = "a2"`, `2 + "a" = "2a"`, `"a" + "b" = "ab"` | [✅](#Add#) |
+| Sub  | Subtração        | `0 - 1 = -1`                                                        | [✅](#Sub#) |
+| Mul  | Multiplicação    | `2 * 2 = 4`                                                         | [✅](#Mul#) |
+| Div  | Divisão          | `3 / 2 = 1`                                                         | [✅](#Div#) |
+| Rem  | Resto da divisão | `4 % 2 = 0`                                                         | [✅](#Rem#) |
 | Eq   | Igualdade        | `"a" == "a"`, `2 == 1 + 1`, `true == true`                          | [❌](#Eq#)  |
 | Neq  | Diferente        | `"a" != "b"`, `3 != 1 + 1`, `true != false`                         | [❌](#Neq#) |
 | Lt   | Menor            | `1 < 2`                                                             | [❌](#Lt#)  |
@@ -202,11 +202,11 @@ if (true) {
 
 | Nome     | Tipo                                   |         |
 | -------- | -------------------------------------- |---------|
-| kind     | String                                 | [❌](#Binary#) |
-| lhs      | Term                                   | [❌](#Binary#) |
-| op       | [BinaryOp](#binaryop-operador-binário) | [❌](#Binary#) |
-| rhs      | Term                                   | [❌](#Binary#) |
-| location | [Location](#location)                  | [❌](#Binary#) |
+| kind     | String                                 | [✅](#Binary#) |
+| lhs      | Term                                   | [✅](#Binary#) |
+| op       | [BinaryOp](#binaryop-operador-binário) | [✅](#Binary#) |
+| rhs      | Term                                   | [✅](#Binary#) |
+| location | [Location](#location)                  | [✅](#Binary#) |
 
 ### Tuple (Criação de uma 2-Tuple)
 
@@ -265,9 +265,9 @@ Exemplos que devem ser válidos: `print(a)`, `print("a")`, `print(2)`, `print(tr
 
 | Nome     | Tipo                  |status|
 | -------- | --------------------- |------|
-| kind     | String                |  [❌](#Print#)  |
-| value    | Term                  |  [❌](#Print#)  |
-| location | [Location](#location) |  [❌](#Print#)  |
+| kind     | String                |  [✅](#Print#)  |
+| value    | Term                  |  [✅](#Print#)  |
+| location | [Location](#location) |  [✅](#Print#)  |
 
 Os valores devem ser impressos como:
 

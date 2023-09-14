@@ -2,6 +2,17 @@
 import { interpreter } from './interpreter';
 
 describe('test #Int#', () => {
+  it('should returns error on try declare not integer', () => {
+    function callInterpreter() {
+      interpreter({
+        kind: 'Int',
+        value: 1.2,
+      });
+    }
+
+    expect(callInterpreter).toThrowError('number is not integer');
+  });
+
   it('should run Int ast and returns 10', () => {
     expect(
       interpreter({
@@ -36,14 +47,5 @@ describe('test #Int#', () => {
         value: -20,
       }),
     ).toEqual(-20);
-  });
-
-  it('should run Int ast and returns -2.2', () => {
-    expect(
-      interpreter({
-        kind: 'Int',
-        value: -2.2,
-      }),
-    ).toEqual(-2.2);
   });
 });
