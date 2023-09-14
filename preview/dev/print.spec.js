@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const interpreter_1 = require("./interpreter");
-describe('InterpreterPrint', () => {
+describe('InterpreterPrint test #Print#', () => {
     it('should run print() ast and returns "Hello world" without" test #PrintString#', () => {
         expect((0, interpreter_1.interpreter)({
             kind: 'Print',

@@ -23,16 +23,35 @@ const interpreter = (expression, variables = {}) => {
         }
         case 'Binary':
             switch (expression.op) {
+                case 'And':
+                    return (0, exports.interpreter)(expression.lhs, variables) && (0, exports.interpreter)(expression.rhs, variables);
+                case 'Or':
+                    return (0, exports.interpreter)(expression.lhs, variables) || (0, exports.interpreter)(expression.rhs, variables);
                 case 'Eq':
                     return (0, exports.interpreter)(expression.lhs, variables) === (0, exports.interpreter)(expression.rhs, variables);
                 case 'Add':
                     return (0, exports.interpreter)(expression.lhs, variables) + (0, exports.interpreter)(expression.rhs, variables);
+                case 'Mul':
+                    return (0, exports.interpreter)(expression.lhs, variables) * (0, exports.interpreter)(expression.rhs, variables);
+                case 'Div':
+                    if (expression.lhs.kind === 'Int' && expression.rhs.kind === 'Int') {
+                        return Math.floor((0, exports.interpreter)(expression.lhs, variables) / (0, exports.interpreter)(expression.rhs, variables));
+                    }
+                    return (0, exports.interpreter)(expression.lhs, variables) / (0, exports.interpreter)(expression.rhs, variables);
                 case 'Sub':
                     return (0, exports.interpreter)(expression.lhs, variables) - (0, exports.interpreter)(expression.rhs, variables);
-                case 'Or':
-                    return (0, exports.interpreter)(expression.lhs, variables) || (0, exports.interpreter)(expression.rhs, variables);
+                case 'Neq':
+                    return (0, exports.interpreter)(expression.lhs, variables) !== (0, exports.interpreter)(expression.rhs, variables);
                 case 'Lt':
                     return (0, exports.interpreter)(expression.lhs, variables) < (0, exports.interpreter)(expression.rhs, variables);
+                case 'Lte':
+                    return (0, exports.interpreter)(expression.lhs, variables) <= (0, exports.interpreter)(expression.rhs, variables);
+                case 'Gt':
+                    return (0, exports.interpreter)(expression.lhs, variables) > (0, exports.interpreter)(expression.rhs, variables);
+                case 'Gte':
+                    return (0, exports.interpreter)(expression.lhs, variables) >= (0, exports.interpreter)(expression.rhs, variables);
+                case 'Rem':
+                    return (0, exports.interpreter)(expression.lhs, variables) % (0, exports.interpreter)(expression.rhs, variables);
                 default:
                     throw new Error(`unmapped operation ${expression}`);
             }
@@ -56,6 +75,10 @@ const interpreter = (expression, variables = {}) => {
             variables[expression.name.text] = (0, exports.interpreter)(expression.value, variables);
             return (0, exports.interpreter)(expression.next, variables);
         case 'Int':
+            if (!Number.isInteger(expression.value)) {
+                throw new Error('number is not integer');
+            }
+            return expression.value;
         case 'Str':
         case 'Bool':
             return expression.value;
