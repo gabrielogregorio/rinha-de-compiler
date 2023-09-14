@@ -152,14 +152,14 @@ Um `BinaryOp` é um enumerador que representa uma operação binária. Essas sã
 | Mul  | Multiplicação    | `2 * 2 = 4`                                                         | [✅](#Mul#) |
 | Div  | Divisão          | `3 / 2 = 1`                                                         | [✅](#Div#) |
 | Rem  | Resto da divisão | `4 % 2 = 0`                                                         | [✅](#Rem#) |
-| Eq   | Igualdade        | `"a" == "a"`, `2 == 1 + 1`, `true == true`                          | [❌](#Eq#)  |
-| Neq  | Diferente        | `"a" != "b"`, `3 != 1 + 1`, `true != false`                         | [❌](#Neq#) |
-| Lt   | Menor            | `1 < 2`                                                             | [❌](#Lt#)  |
-| Gt   | Maior            | `2 > 3`                                                             | [❌](#Gt#)  |
-| Lte  | Menor ou igual   | `1 <= 2`                                                            | [❌](#Lte#) |
-| Gte  | Maior ou igual   | `1 >= 2`                                                            | [❌](#Gte#) |
-| And  | Conjunção        | `true && false`                                                     | [❌](#And#) |
-| Or   | Disjunção        | `false \|\| true`                                                   | [❌](#Or#)  |
+| Eq   | Igualdade        | `"a" == "a"`, `2 == 1 + 1`, `true == true`                          | [✅](#Eq#)  |
+| Neq  | Diferente        | `"a" != "b"`, `3 != 1 + 1`, `true != false`                         | [✅](#Neq#) |
+| Lt   | Menor            | `1 < 2`                                                             | [✅](#Lt#)  |
+| Gt   | Maior            | `2 > 3`                                                             | [✅](#Gt#)  |
+| Lte  | Menor ou igual   | `1 <= 2`                                                            | [✅](#Lte#) |
+| Gte  | Maior ou igual   | `1 >= 2`                                                            | [✅](#Gte#) |
+| And  | Conjunção        | `true && false`                                                     | [✅](#And#) |
+| Or   | Disjunção        | `false \|\| true`                                                   | [✅](#Or#)  |
 
 Overflow não será testado.
 

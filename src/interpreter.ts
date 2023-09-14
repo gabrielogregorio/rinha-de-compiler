@@ -31,6 +31,12 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
     case 'Binary':
       // eslint-disable-next-line sonarjs/no-nested-switch
       switch (expression.op) {
+        case 'And':
+          return interpreter(expression.lhs, variables) && interpreter(expression.rhs, variables);
+
+        case 'Or':
+          return interpreter(expression.lhs, variables) || interpreter(expression.rhs, variables);
+
         case 'Eq':
           return interpreter(expression.lhs, variables) === interpreter(expression.rhs, variables);
 
@@ -49,11 +55,20 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
         case 'Sub':
           return interpreter(expression.lhs, variables) - interpreter(expression.rhs, variables);
 
-        case 'Or':
-          return interpreter(expression.lhs, variables) || interpreter(expression.rhs, variables);
+        case 'Neq':
+          return interpreter(expression.lhs, variables) !== interpreter(expression.rhs, variables);
 
         case 'Lt':
           return interpreter(expression.lhs, variables) < interpreter(expression.rhs, variables);
+
+        case 'Lte':
+          return interpreter(expression.lhs, variables) <= interpreter(expression.rhs, variables);
+
+        case 'Gt':
+          return interpreter(expression.lhs, variables) > interpreter(expression.rhs, variables);
+
+        case 'Gte':
+          return interpreter(expression.lhs, variables) >= interpreter(expression.rhs, variables);
 
         case 'Rem':
           return interpreter(expression.lhs, variables) % interpreter(expression.rhs, variables);
