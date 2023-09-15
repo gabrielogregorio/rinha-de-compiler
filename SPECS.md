@@ -70,8 +70,8 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome     | Tipo                  |      |
 | -------- | --------------------- |------|
-| text     | String                |  [❌](#Parameter#)  |
-| location | [Location](#location) |  [❌](#Parameter#)  |
+| text     | String                |  [✅](#Parameter#)  |
+| location | [Location](#location) |  [✅](#Parameter#)  |
 
 ### Var (Nome de uma variável)
 
@@ -79,9 +79,9 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome     | Tipo                  |      |
 | -------- | --------------------- |------|
-| kind     | String                |  [❌](#Var#)  |
-| text     | String                |  [❌](#Var#)  |
-| location | [Location](#location) |  [❌](#Var#)  |
+| kind     | String                |  [✅](#Var#)  |
+| text     | String                |  [✅](#Var#)  |
+| location | [Location](#location) |  [✅](#Var#)  |
 
 ### Function (Função anônima)
 
@@ -89,10 +89,10 @@ Onde `..` é um location node que foi ocultado por brevidade.
 
 | Nome       | Tipo                      |      |
 | ---------- | ------------------------- |------|
-| kind       | String                    |  [❌](#Function#)  |
-| parameters | [[Parameter](#parameter)] |  [❌](#Function#)  |
-| value      | Term                      |  [❌](#Function#)  |
-| location   | [Location](#location)     |  [❌](#Function#)  |
+| kind       | String                    |  [✅](#Function#)  |
+| parameters | [[Parameter](#parameter)] |  [✅](#Function#)  |
+| value      | Term                      |  [✅](#Function#)  |
+| location   | [Location](#location)     |  [✅](#Function#)  |
 
 Toda função quando chamada deve dar erro caso o número de parâmetros seja diferente do número de argumentos.
 
@@ -102,10 +102,10 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 | Nome      | Tipo                  |      |
 | --------- | --------------------- |------|
-| kind      | String                |  [❌](#Call#)  |
-| callee    | Term                  |  [❌](#Call#)  |
-| arguments | [Term]                |  [❌](#Call#)  |
-| location  | [Location](#location) |  [❌](#Call#)  |
+| kind      | String                |  [✅](#Call#)  |
+| callee    | Term                  |  [✅](#Call#)  |
+| arguments | [Term]                |  [✅](#Call#)  |
+| location  | [Location](#location) |  [✅](#Call#)  |
 
 ### Let
 
@@ -113,11 +113,11 @@ Toda função quando chamada deve dar erro caso o número de parâmetros seja di
 
 | Nome     | Tipo                    | Status    |
 | -------- | ----------------------- |-----------|
-| kind     | String                  | [❌](#Let#) |
-| name     | [Parameter](#parameter) | [❌](#Let#) |
-| value    | Term                    | [❌](#Let#) |
-| next     | Term                    | [❌](#Let#) |
-| location | [Location](#location)   | [❌](#Let#) |
+| kind     | String                  | [✅](#Let#) |
+| name     | [Parameter](#parameter) | [✅](#Let#) |
+| value    | Term                    | [✅](#Let#) |
+| next     | Term                    | [✅](#Let#) |
+| location | [Location](#location)   | [✅](#Let#) |
 
 É permitido usar hoisting como forma de possibilitar a criação de funções recursivas.
 
@@ -189,11 +189,11 @@ if (true) {
 
 | Nome      | Tipo                  |         |
 | --------- | --------------------- |---------|
-| kind      | String                | [❌](#If#)|
-| condition | Term                  | [❌](#If#)|
-| then      | Term                  | [❌](#If#)|
-| otherwise | Term                  | [❌](#If#)|
-| location  | [Location](#location) | [❌](#If#)|
+| kind      | String                | [✅](#If#)|
+| condition | Term                  | [✅](#If#)|
+| then      | Term                  | [✅](#If#)|
+| otherwise | Term                  | [✅](#If#)|
+| location  | [Location](#location) | [✅](#If#)|
 
 ### Binary (Operação Binária)
 
@@ -220,10 +220,10 @@ Ela tem os seguintes elementos:
 
 | Nome     | Tipo                  |         |
 | -------- | --------------------- |---------|
-| kind     | String                | [❌](#Tuple#) |
-| first    | Term                  | [❌](#Tuple#) |
-| second   | Term                  | [❌](#Tuple#) |
-| location | [Location](#location) | [❌](#Tuple#) |
+| kind     | String                | [✅](#Tuple#) |
+| first    | Term                  | [✅](#Tuple#) |
+| second   | Term                  | [✅](#Tuple#) |
+| location | [Location](#location) | [✅](#Tuple#) |
 
 ### First (Função de pegar o primeiro elemento de uma tupla)
 
@@ -239,7 +239,7 @@ first((1, 2))
 | value    | Term                  | [❌](#First#) |
 | location | [Location](#location) | [❌](#First#) |
 
-Quando o first for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
+[✅](#FirstErrorRuntime#) Quando o first for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
 
 ### Second (Função de pegar o segundo elemento de uma tupla)
 
@@ -255,7 +255,7 @@ second((1, 2))
 | value    | Term                  | [❌](#Second#) |
 | location | [Location](#location) | [❌](#Second#) |
 
-Quando o second for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
+[✅](#SecondErrorRuntime#) Quando o second for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
 
 ### Print (Função de printar para o standard output)
 

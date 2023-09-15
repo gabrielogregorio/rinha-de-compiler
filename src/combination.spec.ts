@@ -159,7 +159,7 @@ const program: ExpressionBase = {
 };
 
 describe('InterpreterCombination', () => {
-  it('should run fib() ast and returns 45', () => {
+  it('should run fib() ast and returns 45 test #Function# test #Parameter# test #Call# test #Let#', () => {
     const EXPECTED_RESULT_COMBINATION = 45;
     expect(interpreter(program.expression)).toEqual(EXPECTED_RESULT_COMBINATION);
   });
