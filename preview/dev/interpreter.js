@@ -58,6 +58,18 @@ const interpreter = (expression, variables = {}) => {
         case 'Tuple': {
             return [(0, exports.interpreter)(expression.first, variables), (0, exports.interpreter)(expression.second, variables)];
         }
+        case 'First': {
+            if (expression.value.kind === 'Tuple') {
+                return expression.value.first;
+            }
+            throw new Error(`First needs use only Tuple`);
+        }
+        case 'Second': {
+            if (expression.value.kind === 'Tuple') {
+                return expression.value.second;
+            }
+            throw new Error(`Second needs use only Tuple`);
+        }
         case 'If':
             return (0, exports.interpreter)((0, exports.interpreter)(expression.condition, variables) ? expression.then : expression.otherwise, variables);
         case 'Function':
@@ -83,7 +95,10 @@ const interpreter = (expression, variables = {}) => {
         case 'Bool':
             return expression.value;
         case 'Var':
-            return variables[expression.text];
+            if (expression.text in variables) {
+                return variables[expression.text];
+            }
+            throw new Error(`variable "${expression.text}" is not declared`);
         case 'Call': {
             const args = [];
             const size = expression.arguments.length;

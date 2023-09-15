@@ -48,14 +48,14 @@ export type ExpressionBinary = {
 };
 type ExpressionIf = {
     kind: 'If';
-    condition: ExpressionBinary;
+    condition: ExpressionBinary | Expression;
     then: Expression;
-    otherwise: ExpressionBinary;
+    otherwise: ExpressionBinary | Expression;
     location?: locationType;
 };
 type ExpressionPrint = {
     kind: 'Print';
-    value: Expression;
+    value: TermType;
     location?: locationType;
 };
 type ExpressionLet = {
@@ -89,6 +89,6 @@ type ExpressionTuple = {
     second: TermType;
     location?: locationType;
 };
-export type TermType = ExpressionInt | ExpressionStr | ExpressionCall | ExpressionBinary | ExpressionFunction | ExpressionLet | ExpressionIf | ExpressionPrint | ExpressionFirst | ExpressionSecond | ExpressionBool | ExpressionVar;
-export type Expression = ExpressionTuple | ExpressionLet | ExpressionIf | ExpressionFunction | ExpressionVar | ExpressionBinary | ExpressionCall | ExpressionInt | ExpressionStr | ExpressionPrint | ExpressionBool;
+export type TermType = ExpressionTuple | ExpressionInt | ExpressionStr | ExpressionCall | ExpressionBinary | ExpressionFunction | ExpressionLet | ExpressionIf | ExpressionPrint | ExpressionBool | ExpressionVar;
+export type Expression = ExpressionLet | ExpressionIf | ExpressionFunction | ExpressionVar | ExpressionBinary | ExpressionCall | ExpressionInt | ExpressionStr | ExpressionPrint | ExpressionFirst | ExpressionSecond | ExpressionBool;
 export {};
