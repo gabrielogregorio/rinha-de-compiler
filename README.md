@@ -22,9 +22,6 @@ docker run rinha
 ```
 
 > docker build -t rinha . && docker run rinha
-
-
-
 ## Execução do interpretador via cli
 
 1. Use o nodejs 16.14 ou superior (recomendo o nodejs 20).
@@ -32,7 +29,6 @@ docker run rinha
 3. Instale os pacotes `pnpm i`
 4. Faça o build do interpretador `pnpm build`
 5. Execute interpretador buildado informando o arquivo alvo `node dist/runner.js ./files/combination.json`
-
 
 ## Decisões
 - Foi priorizado o uso de switch pelo desempenho, em testes, usando o if tinhamos 1s, e o switch 0.68s
@@ -52,3 +48,4 @@ Para brincar com o bun, execute um yarn build para buildar o interpretador.
 npm install -g bun
 bun dist/runner.js  ./files/combination.json
 ```
+

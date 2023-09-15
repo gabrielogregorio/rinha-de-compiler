@@ -60,15 +60,15 @@ export type ExpressionBinary = {
 
 type ExpressionIf = {
   kind: 'If';
-  condition: ExpressionBinary;
+  condition: ExpressionBinary | Expression;
   then: Expression;
-  otherwise: ExpressionBinary;
+  otherwise: ExpressionBinary | Expression;
   location?: locationType;
 };
 
 type ExpressionPrint = {
   kind: 'Print';
-  value: Expression;
+  value: TermType;
   location?: locationType;
 };
 
@@ -111,6 +111,7 @@ type ExpressionTuple = {
 
 export type TermType = // test #TermType#
 
+    | ExpressionTuple
     | ExpressionInt
     | ExpressionStr
     | ExpressionCall
@@ -119,13 +120,10 @@ export type TermType = // test #TermType#
     | ExpressionLet
     | ExpressionIf
     | ExpressionPrint
-    | ExpressionFirst
-    | ExpressionSecond
     | ExpressionBool
     | ExpressionVar;
 
 export type Expression =
-  | ExpressionTuple
   | ExpressionLet
   | ExpressionIf
   | ExpressionFunction
@@ -135,6 +133,8 @@ export type Expression =
   | ExpressionInt
   | ExpressionStr
   | ExpressionPrint
+  | ExpressionFirst
+  | ExpressionSecond
   | ExpressionBool;
 
 // FINISH IMPLEMENTATION SPECIFICATION...
