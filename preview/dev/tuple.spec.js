@@ -39,7 +39,7 @@ describe('test #Tuple#', () => {
             },
         })).toStrictEqual([10, 'Second']);
     });
-    it('should run Tuple ast and get first', () => {
+    it('should run Tuple ast and get first test #First#', () => {
         expect((0, interpreter_1.interpreter)({
             kind: 'First',
             value: {
@@ -55,7 +55,7 @@ describe('test #Tuple#', () => {
             },
         })).toStrictEqual({ kind: 'Int', value: 10 });
     });
-    it('should run Tuple ast and get second', () => {
+    it('should run Tuple ast and get second test #Second#', () => {
         expect((0, interpreter_1.interpreter)({
             kind: 'Second',
             value: {
