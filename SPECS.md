@@ -235,9 +235,9 @@ first((1, 2))
 
 | Nome     | Tipo                  |          |
 | -------- | --------------------- |----------|
-| kind     | String                | [❌](#First#) |
-| value    | Term                  | [❌](#First#) |
-| location | [Location](#location) | [❌](#First#) |
+| kind     | String                | [✅](#First#) |
+| value    | Term                  | [✅](#First#) |
+| location | [Location](#location) | [✅](#First#) |
 
 [✅](#FirstErrorRuntime#) Quando o first for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
 
@@ -251,9 +251,9 @@ second((1, 2))
 
 | Nome     | Tipo                  |              |
 | -------- | --------------------- |-------------|
-| kind     | String                | [❌](#Second#) |
-| value    | Term                  | [❌](#Second#) |
-| location | [Location](#location) | [❌](#Second#) |
+| kind     | String                | [✅](#Second#) |
+| value    | Term                  | [✅](#Second#) |
+| location | [Location](#location) | [✅](#Second#) |
 
 [✅](#SecondErrorRuntime#) Quando o second for chamado com algo que não é uma tupla ele deve dar um erro de runtime.
 

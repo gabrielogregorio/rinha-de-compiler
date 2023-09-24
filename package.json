@@ -1,6 +1,6 @@
 {
   "name": "rinha-de-compiler",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "main": "dist/index.js",
   "description": "Interpreter for rinha",
   "keywords": [
@@ -23,6 +23,7 @@
     "format": "prettier src/* --write",
     "b": "yarn build",
     "jw":"npm run jest:watch",
+    "tw":"npm run jest:watch",
     "j":"npm run jest:watch",
     "mts":"npm run update:marks"
   },
