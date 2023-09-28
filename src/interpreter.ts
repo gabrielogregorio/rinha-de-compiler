@@ -82,16 +82,18 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
     }
 
     case 'First': {
-      if (expression.value.kind === 'Tuple') {
-        return expression.value.first;
+      const result = interpreter(expression.value, variables);
+      if (Array.isArray(result)) {
+        return result[0];
       }
 
       throw new Error(`First needs use only Tuple`);
     }
 
     case 'Second': {
-      if (expression.value.kind === 'Tuple') {
-        return expression.value.second;
+      const result = interpreter(expression.value, variables);
+      if (Array.isArray(result)) {
+        return result[1];
       }
 
       throw new Error(`Second needs use only Tuple`);

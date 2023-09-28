@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 import { interpreter } from './interpreter';
 
@@ -62,7 +63,7 @@ describe('test #Tuple#', () => {
           },
         },
       }),
-    ).toStrictEqual({ kind: 'Int', value: 10 });
+    ).toStrictEqual(10);
   });
 
   it('should run Tuple ast and get second test #Second#', () => {
@@ -81,6 +82,41 @@ describe('test #Tuple#', () => {
           },
         },
       }),
-    ).toStrictEqual({ kind: 'Str', value: 'Second' });
+    ).toStrictEqual('Second');
+  });
+});
+
+const tupleWithVar = {
+  name: 'arquivo.rinha',
+  expression: {
+    kind: 'Let',
+    name: {
+      text: 'x',
+    },
+    value: {
+      kind: 'Tuple',
+      first: {
+        kind: 'Int',
+        value: 1,
+      },
+      second: {
+        kind: 'Int',
+        value: 2,
+      },
+    },
+    next: {
+      kind: 'First',
+      value: {
+        kind: 'Var',
+        text: 'x',
+      },
+    },
+  },
+};
+
+describe('advanceTuple', () => {
+  it('should run Tuple with var', () => {
+    // @ts-ignore
+    expect(interpreter(tupleWithVar.expression)).toStrictEqual(1);
   });
 });

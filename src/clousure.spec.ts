@@ -46,3 +46,52 @@ describe('InterpreterFib', () => {
     expect(interpreter(program.expression)).toEqual(EXPECTED_RESULT_FIB);
   });
 });
+
+const program2 = {
+  expression: {
+    kind: 'Let',
+    name: { text: 'sum' },
+    value: {
+      kind: 'Function',
+      parameters: [{ text: 'a' }, { text: 'b' }],
+      value: {
+        kind: 'Print',
+        value: {
+          kind: 'Binary',
+          lhs: { kind: 'Var', text: 'a' },
+          op: 'Add',
+          rhs: { kind: 'Var', text: 'b' },
+        },
+      },
+    },
+    next: {
+      kind: 'Let',
+      name: { text: '_' },
+      value: {
+        kind: 'Call',
+        callee: { kind: 'Var', text: 'sum' },
+        arguments: [
+          { kind: 'Int', value: 10 },
+          { kind: 'Int', value: 10 },
+        ],
+      },
+      next: {
+        kind: 'Call',
+        callee: { kind: 'Var', text: 'sum' },
+        arguments: [
+          { kind: 'Int', value: 10 },
+          { kind: 'Int', value: 10 },
+        ],
+      },
+    },
+  },
+};
+
+describe('InterpreterFib', () => {
+  it('should run function', () => {
+    const EXPECTED_RESULT_FIB = 20;
+
+    // @ts-ignore
+    expect(interpreter(program2.expression)).toEqual(EXPECTED_RESULT_FIB);
+  });
+});
