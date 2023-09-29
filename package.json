@@ -22,10 +22,10 @@
     "lint": "eslint -c ./.eslintrc.js --ext '.ts' 'src/**'",
     "format": "prettier src/* --write",
     "b": "yarn build",
-    "jw":"npm run jest:watch",
-    "tw":"npm run jest:watch",
-    "j":"npm run jest:watch",
-    "mts":"npm run update:marks"
+    "jw": "npm run jest:watch",
+    "tw": "npm run jest:watch",
+    "j": "npm run jest:watch",
+    "mts": "npm run update:marks"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",

@@ -74,6 +74,6 @@ describe('InterpreterPrint test #Print#', () => {
           },
         },
       }),
-    ).toEqual('(term, term)');
+    ).toEqual('(10, 20)');
   });
 });

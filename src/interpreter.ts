@@ -1,13 +1,8 @@
 import { Expression, TermType } from './types';
 
-const generateCacheKey = (calleeText, args, variables) => {
-  const argsKey = JSON.stringify(args);
-  const varsKey = JSON.stringify(variables);
+const generateCacheKey = (calleeText, args, variables) => calleeText + JSON.stringify(args) + JSON.stringify(variables);
 
-  return `${calleeText}-${argsKey}-${varsKey}`;
-};
-
-const cacheCalledFunctions = {};
+const cacheCalledFunctions = new Map();
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const interpreter = (expression: Expression | TermType, variables = {}) => {
@@ -21,7 +16,7 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
       }
 
       if (Array.isArray(value)) {
-        finalValue = '(term, term)';
+        finalValue = `(${value[0]}, ${value[1]})`;
       }
 
       console.log(finalValue);
@@ -110,10 +105,9 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
         const localScope = { ...variables };
         const { parameters } = expression;
 
-        let count = 0;
-        while (count < parameters.length) {
+        const len = parameters.length;
+        for (let count = 0; count < len; count += 1) {
           localScope[parameters[count].text] = args[count];
-          count += 1;
         }
 
         return interpreter(expression.value, localScope);
@@ -153,13 +147,12 @@ export const interpreter = (expression: Expression | TermType, variables = {}) =
       // @ts-ignore
       const cacheKey = generateCacheKey(expression.callee.text, args, variables);
 
-      const cacheResponse = cacheCalledFunctions[cacheKey];
-      if (cacheResponse) {
-        return cacheResponse;
+      if (cacheCalledFunctions.has(cacheKey)) {
+        return cacheCalledFunctions.get(cacheKey);
       }
 
       const response = interpreter(expression.callee, variables)(...args);
-      cacheCalledFunctions[cacheKey] = response;
+      cacheCalledFunctions.set(cacheKey, response);
       return response;
     }
     default:
