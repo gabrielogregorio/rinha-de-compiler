@@ -60,6 +60,6 @@ describe('InterpreterPrint test #Print#', () => {
                     value: 20,
                 },
             },
-        })).toEqual('(term, term)');
+        })).toEqual('(10, 20)');
     });
 });

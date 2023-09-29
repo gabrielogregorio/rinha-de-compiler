@@ -1,12 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.interpreter = void 0;
-const generateCacheKey = (calleeText, args, variables) => {
-    const argsKey = JSON.stringify(args);
-    const varsKey = JSON.stringify(variables);
-    return `${calleeText}-${argsKey}-${varsKey}`;
-};
-const cacheCalledFunctions = {};
+const generateCacheKey = (calleeText, args, variables) => calleeText + JSON.stringify(args) + JSON.stringify(variables);
+const cacheCalledFunctions = new Map();
 const interpreter = (expression, variables = {}) => {
     switch (expression.kind) {
         case 'Print': {
@@ -16,7 +12,7 @@ const interpreter = (expression, variables = {}) => {
                 finalValue = '<#closure>';
             }
             if (Array.isArray(value)) {
-                finalValue = '(term, term)';
+                finalValue = `(${value[0]}, ${value[1]})`;
             }
             console.log(finalValue);
             return finalValue;
@@ -78,10 +74,9 @@ const interpreter = (expression, variables = {}) => {
             return (...args) => {
                 const localScope = Object.assign({}, variables);
                 const { parameters } = expression;
-                let count = 0;
-                while (count < parameters.length) {
+                const len = parameters.length;
+                for (let count = 0; count < len; count += 1) {
                     localScope[parameters[count].text] = args[count];
-                    count += 1;
                 }
                 return (0, exports.interpreter)(expression.value, localScope);
             };
@@ -110,12 +105,11 @@ const interpreter = (expression, variables = {}) => {
                 count += 1;
             }
             const cacheKey = generateCacheKey(expression.callee.text, args, variables);
-            const cacheResponse = cacheCalledFunctions[cacheKey];
-            if (cacheResponse) {
-                return cacheResponse;
+            if (cacheCalledFunctions.has(cacheKey)) {
+                return cacheCalledFunctions.get(cacheKey);
             }
             const response = (0, exports.interpreter)(expression.callee, variables)(...args);
-            cacheCalledFunctions[cacheKey] = response;
+            cacheCalledFunctions.set(cacheKey, response);
             return response;
         }
         default:
